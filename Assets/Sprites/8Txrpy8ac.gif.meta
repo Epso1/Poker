@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8Txrpy8ac_0
+      name: Card_Heart2
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,7 +144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_1
+      name: Card_Heart3
       rect:
         serializedVersion: 2
         x: 125
@@ -152,7 +152,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,7 +165,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_2
+      name: Card_Heart4
       rect:
         serializedVersion: 2
         x: 250
@@ -173,7 +173,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_3
+      name: Card_Heart5
       rect:
         serializedVersion: 2
         x: 375
@@ -194,7 +194,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_4
+      name: Card_Heart6
       rect:
         serializedVersion: 2
         x: 500
@@ -215,7 +215,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -228,7 +228,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_5
+      name: Card_Heart7
       rect:
         serializedVersion: 2
         x: 625
@@ -236,7 +236,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -249,7 +249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_6
+      name: Card_Heart8
       rect:
         serializedVersion: 2
         x: 750
@@ -257,7 +257,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -270,7 +270,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_7
+      name: Card_Heart9
       rect:
         serializedVersion: 2
         x: 875
@@ -278,7 +278,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -291,7 +291,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_8
+      name: Card_Heart10
       rect:
         serializedVersion: 2
         x: 1000
@@ -299,7 +299,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -312,7 +312,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_9
+      name: Card_HeartJack
       rect:
         serializedVersion: 2
         x: 1125
@@ -320,7 +320,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -333,7 +333,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_10
+      name: Card_HeartQueen
       rect:
         serializedVersion: 2
         x: 1250
@@ -341,7 +341,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -354,7 +354,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_11
+      name: Card_HeartKing
       rect:
         serializedVersion: 2
         x: 1375
@@ -362,7 +362,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -375,7 +375,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_12
+      name: Card_HeartAce
       rect:
         serializedVersion: 2
         x: 1500
@@ -383,7 +383,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -396,7 +396,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_13
+      name: Card_Diamond2
       rect:
         serializedVersion: 2
         x: 0
@@ -404,7 +404,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -417,7 +417,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_14
+      name: Card_Diamond3
       rect:
         serializedVersion: 2
         x: 125
@@ -425,7 +425,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -438,7 +438,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_15
+      name: Card_Diamond4
       rect:
         serializedVersion: 2
         x: 250
@@ -446,7 +446,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -459,7 +459,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_16
+      name: Card_Diamond5
       rect:
         serializedVersion: 2
         x: 375
@@ -467,7 +467,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -480,7 +480,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_17
+      name: Card_Diamond6
       rect:
         serializedVersion: 2
         x: 500
@@ -488,7 +488,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -501,7 +501,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_18
+      name: Card_Diamond7
       rect:
         serializedVersion: 2
         x: 625
@@ -509,7 +509,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -522,7 +522,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_19
+      name: Card_Diamond8
       rect:
         serializedVersion: 2
         x: 750
@@ -530,7 +530,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -543,7 +543,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_20
+      name: Card_Diamond9
       rect:
         serializedVersion: 2
         x: 875
@@ -551,7 +551,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -564,7 +564,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_21
+      name: Card_Diamond10
       rect:
         serializedVersion: 2
         x: 1000
@@ -572,7 +572,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -585,7 +585,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_22
+      name: Card_DiamondJack
       rect:
         serializedVersion: 2
         x: 1125
@@ -593,7 +593,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -606,7 +606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_23
+      name: Card_DiamondQueen
       rect:
         serializedVersion: 2
         x: 1250
@@ -614,7 +614,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -627,7 +627,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_24
+      name: Card_DiamondKing
       rect:
         serializedVersion: 2
         x: 1375
@@ -635,7 +635,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -648,7 +648,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_25
+      name: Card_DiamondAce
       rect:
         serializedVersion: 2
         x: 1500
@@ -656,7 +656,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -669,7 +669,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_26
+      name: Card_Club2
       rect:
         serializedVersion: 2
         x: 0
@@ -677,7 +677,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -690,7 +690,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_27
+      name: Card_Club3
       rect:
         serializedVersion: 2
         x: 125
@@ -698,7 +698,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -711,7 +711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_28
+      name: Card_Club4
       rect:
         serializedVersion: 2
         x: 250
@@ -719,7 +719,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -732,7 +732,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_29
+      name: Card_Club5
       rect:
         serializedVersion: 2
         x: 375
@@ -740,7 +740,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -753,7 +753,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_30
+      name: Card_Club6
       rect:
         serializedVersion: 2
         x: 500
@@ -761,7 +761,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -774,7 +774,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_31
+      name: Card_Club7
       rect:
         serializedVersion: 2
         x: 625
@@ -782,7 +782,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -795,7 +795,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_32
+      name: Card_Club8
       rect:
         serializedVersion: 2
         x: 750
@@ -803,7 +803,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -816,7 +816,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_33
+      name: Card_Club9
       rect:
         serializedVersion: 2
         x: 875
@@ -824,7 +824,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -837,7 +837,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_34
+      name: Card_Club10
       rect:
         serializedVersion: 2
         x: 1000
@@ -845,7 +845,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -858,7 +858,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_35
+      name: Card_ClubJack
       rect:
         serializedVersion: 2
         x: 1125
@@ -866,7 +866,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -879,7 +879,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_36
+      name: Card_ClubQueen
       rect:
         serializedVersion: 2
         x: 1250
@@ -887,7 +887,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -900,7 +900,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_37
+      name: Card_ClubKing
       rect:
         serializedVersion: 2
         x: 1375
@@ -908,7 +908,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -921,7 +921,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_38
+      name: Card_ClubAce
       rect:
         serializedVersion: 2
         x: 1500
@@ -929,7 +929,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -942,7 +942,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_39
+      name: Card_Spade2
       rect:
         serializedVersion: 2
         x: 0
@@ -950,7 +950,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -963,7 +963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_40
+      name: Card_Spade3
       rect:
         serializedVersion: 2
         x: 125
@@ -971,7 +971,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -984,7 +984,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_41
+      name: Card_Spade4
       rect:
         serializedVersion: 2
         x: 250
@@ -992,7 +992,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1005,7 +1005,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_42
+      name: Card_Spade5
       rect:
         serializedVersion: 2
         x: 375
@@ -1013,7 +1013,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1026,7 +1026,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_43
+      name: Card_Spade6
       rect:
         serializedVersion: 2
         x: 500
@@ -1034,7 +1034,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1047,7 +1047,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_44
+      name: Card_Spade7
       rect:
         serializedVersion: 2
         x: 625
@@ -1055,7 +1055,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1068,7 +1068,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_45
+      name: Card_Spade8
       rect:
         serializedVersion: 2
         x: 750
@@ -1076,7 +1076,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1089,7 +1089,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_46
+      name: Card_Spade9
       rect:
         serializedVersion: 2
         x: 875
@@ -1097,7 +1097,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1110,7 +1110,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_47
+      name: Card_Spade10
       rect:
         serializedVersion: 2
         x: 1000
@@ -1118,7 +1118,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1131,7 +1131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_48
+      name: Card_SpadeJack
       rect:
         serializedVersion: 2
         x: 1125
@@ -1139,7 +1139,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1152,7 +1152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_49
+      name: Card_SpadeQueen
       rect:
         serializedVersion: 2
         x: 1250
@@ -1160,7 +1160,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1173,7 +1173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_50
+      name: Card_SpadeKing
       rect:
         serializedVersion: 2
         x: 1375
@@ -1181,7 +1181,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1194,7 +1194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8Txrpy8ac_51
+      name: Card_SpadeAce
       rect:
         serializedVersion: 2
         x: 1500
@@ -1202,7 +1202,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1223,7 +1223,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1244,7 +1244,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1265,7 +1265,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1286,7 +1286,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1307,7 +1307,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1328,7 +1328,7 @@ TextureImporter:
         width: 125.07692
         height: 181.2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1351,64 +1351,64 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      8Txrpy8ac_0: 59064293
-      8Txrpy8ac_1: 567288381
-      8Txrpy8ac_10: -467998503
-      8Txrpy8ac_11: 731294315
-      8Txrpy8ac_12: 1250318909
-      8Txrpy8ac_13: -724814145
-      8Txrpy8ac_14: 589757571
-      8Txrpy8ac_15: -582291621
-      8Txrpy8ac_16: 1941514896
-      8Txrpy8ac_17: -1346681641
-      8Txrpy8ac_18: 622629658
-      8Txrpy8ac_19: 2027110604
-      8Txrpy8ac_2: -1382397109
-      8Txrpy8ac_20: -871213634
-      8Txrpy8ac_21: 1034677532
-      8Txrpy8ac_22: 849623577
-      8Txrpy8ac_23: 957306698
-      8Txrpy8ac_24: -791921326
-      8Txrpy8ac_25: 502420401
-      8Txrpy8ac_26: 175865727
-      8Txrpy8ac_27: 1658185366
-      8Txrpy8ac_28: 1488138568
-      8Txrpy8ac_29: 1470180768
-      8Txrpy8ac_3: 1554708303
-      8Txrpy8ac_30: 529094879
-      8Txrpy8ac_31: -828143853
-      8Txrpy8ac_32: 1137522590
-      8Txrpy8ac_33: 1694462917
-      8Txrpy8ac_34: -289419833
-      8Txrpy8ac_35: 607613578
-      8Txrpy8ac_36: -1218730709
-      8Txrpy8ac_37: -1456142565
-      8Txrpy8ac_38: -1578218018
-      8Txrpy8ac_39: -2002910055
-      8Txrpy8ac_4: -411153458
-      8Txrpy8ac_40: -1554035466
-      8Txrpy8ac_41: -1319296412
-      8Txrpy8ac_42: 396682537
-      8Txrpy8ac_43: 1177465165
-      8Txrpy8ac_44: -944991752
-      8Txrpy8ac_45: 1247365747
-      8Txrpy8ac_46: 25058698
-      8Txrpy8ac_47: -1986156465
-      8Txrpy8ac_48: -1801273757
-      8Txrpy8ac_49: -1496169398
-      8Txrpy8ac_5: 1693152688
-      8Txrpy8ac_50: -1361519246
-      8Txrpy8ac_51: -1184729617
       8Txrpy8ac_52: -408163330
       8Txrpy8ac_53: -1511069324
       8Txrpy8ac_54: -989624569
       8Txrpy8ac_55: 1860861701
       8Txrpy8ac_56: 1059110846
       8Txrpy8ac_57: 1165605055
-      8Txrpy8ac_6: -541368717
-      8Txrpy8ac_7: -1812196910
-      8Txrpy8ac_8: 324382346
-      8Txrpy8ac_9: 316170938
+      Card_Club10: -289419833
+      Card_Club2: 175865727
+      Card_Club3: 1658185366
+      Card_Club4: 1488138568
+      Card_Club5: 1470180768
+      Card_Club6: 529094879
+      Card_Club7: -828143853
+      Card_Club8: 1137522590
+      Card_Club9: 1694462917
+      Card_ClubAce: -1578218018
+      Card_ClubJack: 607613578
+      Card_ClubKing: -1456142565
+      Card_ClubQueen: -1218730709
+      Card_Diamond10: 1034677532
+      Card_Diamond2: -724814145
+      Card_Diamond3: 589757571
+      Card_Diamond4: -582291621
+      Card_Diamond5: 1941514896
+      Card_Diamond6: -1346681641
+      Card_Diamond7: 622629658
+      Card_Diamond8: 2027110604
+      Card_Diamond9: -871213634
+      Card_DiamondAce: 502420401
+      Card_DiamondJack: 849623577
+      Card_DiamondKing: -791921326
+      Card_DiamondQueen: 957306698
+      Card_Heart10: 324382346
+      Card_Heart2: 59064293
+      Card_Heart3: 567288381
+      Card_Heart4: -1382397109
+      Card_Heart5: 1554708303
+      Card_Heart6: -411153458
+      Card_Heart7: 1693152688
+      Card_Heart8: -541368717
+      Card_Heart9: -1812196910
+      Card_HeartAce: 1250318909
+      Card_HeartJack: 316170938
+      Card_HeartKing: 731294315
+      Card_HeartQueen: -467998503
+      Card_Spade10: -1986156465
+      Card_Spade2: -2002910055
+      Card_Spade3: -1554035466
+      Card_Spade4: -1319296412
+      Card_Spade5: 396682537
+      Card_Spade6: 1177465165
+      Card_Spade7: -944991752
+      Card_Spade8: 1247365747
+      Card_Spade9: 25058698
+      Card_SpadeAce: -1184729617
+      Card_SpadeJack: -1801273757
+      Card_SpadeKing: -1361519246
+      Card_SpadeQueen: -1496169398
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

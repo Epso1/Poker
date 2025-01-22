@@ -1,19 +1,103 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
+using static DeckManager;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] public string playerName;
     [SerializeField] public Transform card1Position;
     [SerializeField] public Transform card2Position;
-    [SerializeField] TextMeshPro playerNameText;    
-    public List<DeckManager.Card> hand = new List<DeckManager.Card>();
+    [SerializeField] TextMeshProUGUI playerNameText;
+    [SerializeField] TextMeshProUGUI playerCreditText;
+    [SerializeField] Image card1Image;
+    [SerializeField] Image card2Image;
+    [SerializeField] public int credit;
+    [SerializeField] Sprite[] cardSprites;
+    public List<Card> hand = new List<Card>();
 
+    private void Awake()
+    {
+        if (playerNameText != null)
+        {
+            UpdatePlayerNameText();
+        }
+
+        if (playerCreditText != null)
+        {
+            UpdateCreditText();
+        }
+    }
     private void Start()
+    {     
+        if (card1Image != null && card2Image != null)
+        {
+            UpdateUIHand();
+        }
+    }
+
+    public string FormatCurrency(int value)
+    {
+        return string.Format("${0:N0}", value);
+    }
+
+    void UpdatePlayerNameText()
     {
         playerNameText.text = playerName;
+    }
+
+    void UpdateCreditText()
+    {
+        playerCreditText.text = FormatCurrency(credit);
+    }
+
+    void UpdateUIHand()
+    {
+        // Verificar que la mano tenga al menos dos cartas
+        if (hand.Count >= 2)
+        {
+            // Buscar el sprite de la primera carta
+            Sprite card1Sprite = FindSpriteByName(hand[0].cardObject.name);
+            if (card1Sprite != null)
+            {
+                card1Image.sprite = card1Sprite;
+                card1Image.gameObject.SetActive(true); // Mostrar la imagen si estaba oculta
+            }
+            else
+            {
+                Debug.LogWarning($"Sprite for card {hand[0].cardObject.name} not found.");
+            }
+
+            // Buscar el sprite de la segunda carta
+            Sprite card2Sprite = FindSpriteByName(hand[1].cardObject.name);
+            if (card2Sprite != null)
+            {
+                card2Image.sprite = card2Sprite;
+                card2Image.gameObject.SetActive(true); // Mostrar la imagen si estaba oculta
+            }
+            else
+            {
+                Debug.LogWarning($"Sprite for card {hand[1].cardObject.name} not found.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Not enough cards in hand to update UI.");
+        }
+    }
+
+    // Método auxiliar para encontrar un sprite por nombre
+    Sprite FindSpriteByName(string name)
+    {
+        foreach (Sprite sprite in cardSprites)
+        {
+            if (sprite.name == name)
+            {
+                return sprite;
+            }
+        }
+        return null;
     }
 
 }
