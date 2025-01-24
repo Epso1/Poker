@@ -14,11 +14,22 @@ public class Player : MonoBehaviour
     [SerializeField] Image card1Image;
     [SerializeField] Image card2Image;
     [SerializeField] public int credit;
-    [SerializeField] Sprite[] cardSprites;
     public List<Card> hand = new List<Card>();
+    DeckManager deckManager;
 
     private void Awake()
     {
+       
+    }
+    private void Start()
+    {
+        deckManager = FindObjectOfType<DeckManager>();
+
+        if (card1Image != null && card2Image != null)
+        {
+            UpdateUIHand();
+        }     
+
         if (playerNameText != null)
         {
             UpdatePlayerNameText();
@@ -27,13 +38,6 @@ public class Player : MonoBehaviour
         if (playerCreditText != null)
         {
             UpdateCreditText();
-        }
-    }
-    private void Start()
-    {     
-        if (card1Image != null && card2Image != null)
-        {
-            UpdateUIHand();
         }
     }
 
@@ -58,7 +62,7 @@ public class Player : MonoBehaviour
         if (hand.Count >= 2)
         {
             // Buscar el sprite de la primera carta
-            Sprite card1Sprite = FindSpriteByName(hand[0].cardObject.name);
+            Sprite card1Sprite = deckManager.FindSpriteByName(hand[0].cardObject.name);
             if (card1Sprite != null)
             {
                 card1Image.sprite = card1Sprite;
@@ -70,7 +74,7 @@ public class Player : MonoBehaviour
             }
 
             // Buscar el sprite de la segunda carta
-            Sprite card2Sprite = FindSpriteByName(hand[1].cardObject.name);
+            Sprite card2Sprite = deckManager.FindSpriteByName(hand[1].cardObject.name);
             if (card2Sprite != null)
             {
                 card2Image.sprite = card2Sprite;
@@ -87,17 +91,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Método auxiliar para encontrar un sprite por nombre
-    Sprite FindSpriteByName(string name)
-    {
-        foreach (Sprite sprite in cardSprites)
-        {
-            if (sprite.name == name)
-            {
-                return sprite;
-            }
-        }
-        return null;
-    }
+ 
 
 }
