@@ -14,6 +14,7 @@ public class DeckManager : MonoBehaviour
     [SerializeField] public List<Card> communityCards; // Lista de cartas comunitarias
     [SerializeField] public Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
     [SerializeField] Image[] cardUIImages;
+
     // Clase que representa una carta
     public class Card
     {
@@ -156,6 +157,21 @@ public class DeckManager : MonoBehaviour
 
         UpdateUICommunityCards();
         EvaluateHands();
+    }
+
+    private void SetInitialRoles()
+    {
+        if (players.Count() >= 3)
+        {
+            players[0].SetRole("Dealer");
+            players[1].SetRole("Small Blind");
+            players[1].SetRole("Big Blind");
+        }       
+    }
+
+    private void StartPreFlopBet()
+    {
+
     }
 
     // Instanciar una carta en una posición específica
@@ -326,7 +342,6 @@ public class DeckManager : MonoBehaviour
                 bestHandDescription = handDescription;
                 bestHandCards = handCards;
             }
-            
         }
 
         // Mostrar al ganador

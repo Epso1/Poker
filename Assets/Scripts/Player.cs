@@ -14,12 +14,19 @@ public class Player : MonoBehaviour
     [SerializeField] Image card1Image;
     [SerializeField] Image card2Image;
     [SerializeField] public int credit;
+    [SerializeField] GameObject dealerUIIcon;
+    [SerializeField] GameObject smallBlindUIIcon;
+    [SerializeField] GameObject bigBlindUIIcon;
+
+    public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
 
     private void Awake()
     {
-       
+        dealerUIIcon.SetActive(false);
+        smallBlindUIIcon.SetActive(false);
+        bigBlindUIIcon.SetActive(false);
     }
     private void Start()
     {
@@ -91,6 +98,32 @@ public class Player : MonoBehaviour
         }
     }
 
- 
+    public void SetRole(string newRole)
+    {
+        role = newRole;
+        switch (role)
+        {
+            case "Dealer":
+                dealerUIIcon.SetActive(true);
+                smallBlindUIIcon.SetActive(false);
+                bigBlindUIIcon.SetActive(false);
+                break;
+
+            case "Small Blind":
+                dealerUIIcon.SetActive(false);
+                smallBlindUIIcon.SetActive(true);
+                bigBlindUIIcon.SetActive(false);
+                break;
+
+            case "Big Blind":
+                dealerUIIcon.SetActive(false);
+                smallBlindUIIcon.SetActive(false);
+                bigBlindUIIcon.SetActive(true);
+                break;
+
+            default:
+                break;
+        }
+    } 
 
 }
