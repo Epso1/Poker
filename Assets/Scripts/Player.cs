@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject dealerUIIcon;
     [SerializeField] GameObject smallBlindUIIcon;
     [SerializeField] GameObject bigBlindUIIcon;
-
+    public bool isHuman;
     public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
@@ -27,15 +27,16 @@ public class Player : MonoBehaviour
         dealerUIIcon.SetActive(false);
         smallBlindUIIcon.SetActive(false);
         bigBlindUIIcon.SetActive(false);
+        deckManager = FindObjectOfType<DeckManager>();
     }
     private void Start()
     {
-        deckManager = FindObjectOfType<DeckManager>();
+       
 
-        if (card1Image != null && card2Image != null)
-        {
-            UpdateUIHand();
-        }     
+        //if (isHuman)
+        //{
+        //    UpdateUIHand();
+        //}     
 
         if (playerNameText != null)
         {
@@ -63,11 +64,12 @@ public class Player : MonoBehaviour
         playerCreditText.text = FormatCurrency(credit);
     }
 
-    void UpdateUIHand()
+    public void UpdateUIHand()
     {
         // Verificar que la mano tenga al menos dos cartas
-        if (hand.Count >= 2)
+        if (hand.Count >= 2 && isHuman)
         {
+            Debug.Log("Hello " + hand[0].cardObject.name);
             // Buscar el sprite de la primera carta
             Sprite card1Sprite = deckManager.FindSpriteByName(hand[0].cardObject.name);
             if (card1Sprite != null)
@@ -97,7 +99,12 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Not enough cards in hand to update UI.");
         }
     }
-
+    public void ResetUIRole()
+    {
+        dealerUIIcon.SetActive(false);
+        smallBlindUIIcon.SetActive(false);
+        bigBlindUIIcon.SetActive(false);
+    }
     public void SetRole(string newRole)
     {
         role = newRole;
@@ -122,8 +129,18 @@ public class Player : MonoBehaviour
                 break;
 
             default:
+                dealerUIIcon.SetActive(false);
+                smallBlindUIIcon.SetActive(false);
+                bigBlindUIIcon.SetActive(false);
                 break;
         }
-    } 
+    }
+    
+    public string GetRole()
+    {
+        return role;
+    }
+
+  
 
 }

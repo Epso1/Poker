@@ -28,7 +28,12 @@ public class DeckManager : MonoBehaviour
     {
         CreateDeck(); // Crear las cartas en memoria
         ShuffleDeck(); // Barajar el mazo
-        InstantiateDeck(); // Instanciar las cartas barajadas
+        InstantiateDeck(); // Instanciar las cartas barajadas     
+    }
+
+    void Start() 
+    {
+        SetInitialRoles(); // Establecer los roles iniciales de los jugadores
         DealInitialCards(); // Repartir las cartas iniciales
     }
 
@@ -112,8 +117,19 @@ public class DeckManager : MonoBehaviour
                 player.hand.Add(secondCard);
                 InstantiateCardAtPosition(secondCard, player.card2Position);
             }
+
+            player.UpdateUIHand();
         }
+        
         DealFlopCards();
+    }
+
+    void UpdatePlayersUI()
+    {
+        foreach(Player player in players)
+        {
+            player.UpdateUIHand();
+        }
     }
 
     // Repartir las 3 cartas centrales
@@ -165,8 +181,41 @@ public class DeckManager : MonoBehaviour
         {
             players[0].SetRole("Dealer");
             players[1].SetRole("Small Blind");
+            players[2].SetRole("Big Blind");
+        } 
+        else if (players.Count() == 2)
+        {
+            players[0].SetRole("Small Blind");
             players[1].SetRole("Big Blind");
-        }       
+        }
+    }
+    private void RotateRoles()
+    {
+        // Identificar los roles actuales
+        int bigBlindIndex = players.FindIndex(player => player.GetRole() == "Big Blind");
+        int smallBlindIndex = players.FindIndex(player => player.GetRole() == "Small Blind");
+
+        // Resetear el rol en la IU para todos los jugadores
+        foreach (Player player in players) { player.ResetUIRole(); }
+
+        if (players.Count() >= 3)
+        {      
+            // Calcular los índices para los nuevos roles
+            int newBigBlindIndex = (bigBlindIndex + 1) % players.Count;
+            int newSmallBlindIndex = (newBigBlindIndex - 1 + players.Count) % players.Count;
+            int newDealerIndex = (newSmallBlindIndex - 1 + players.Count) % players.Count;
+
+            // Cambiar roles a los jugadores
+            players[newDealerIndex].SetRole("Dealer");
+            players[newSmallBlindIndex].SetRole("Small Blind");
+            players[newBigBlindIndex].SetRole("Big Blind");
+        }
+        else
+        {
+            // Cambiar roles a los jugadores
+            players[smallBlindIndex].SetRole("Big Blind");
+            players[bigBlindIndex].SetRole("Small Blind");
+        }
     }
 
     private void StartPreFlopBet()
@@ -269,13 +318,17 @@ public class DeckManager : MonoBehaviour
         if (deckContainer != null) Destroy(deckContainer); // Elimina el contenedor y todas las cartas dentro
         deck.Clear();
         communityCards.Clear();
-        foreach(Player player in players)player.hand.Clear();         
+        foreach (Player player in players) 
+        {
+            player.hand.Clear();
+        }       
         GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
         foreach (GameObject card in cards) Destroy(card.gameObject);  
 
         CreateDeck(); // Crear las cartas en memoria
         ShuffleDeck(); // Barajar el mazo
         InstantiateDeck(); // Instanciar las cartas barajadas
+        RotateRoles(); // Cambia los roles de los jugadores para la nueva mano
         DealInitialCards(); // Repartir las cartas iniciales
     }
 
@@ -329,7 +382,7 @@ public class DeckManager : MonoBehaviour
             {
                 if (CompareHands(bestHandCards, handCards) == -1)
                 {
-                    Debug.Log($"La mano del jugador {player.playerName} es superior a la mejor mano actual.");
+                    //Debug.Log($"La mano del jugador {player.playerName} es superior a la mejor mano actual.");
                     bestPlayer = player;
                     bestHandDescription = handDescription;
                     bestHandCards = handCards;
@@ -358,11 +411,11 @@ public class DeckManager : MonoBehaviour
 
         if (IsRoyalFlush(sortedCards)) return ("EscaleraReal", GetBestRoyalFlush(sortedCards));
         if (IsStraightFlush(sortedCards)) return ($"EscaleradeColor al {GetBestStraightFlush(sortedCards)[0].rank}", GetBestStraightFlush(sortedCards));
-        if (IsFourOfAKind(sortedCards)) return ($"Póker de {GetBestFourOfAKind(sortedCards)[0].rank}", GetBestFourOfAKind(sortedCards));
+        if (IsFourOfAKind(sortedCards)) return ($"Poker de {GetBestFourOfAKind(sortedCards)[0].rank}", GetBestFourOfAKind(sortedCards));
         if (IsFullHouse(sortedCards)) return ($"FullHouse con {GetBestFullHouse(sortedCards)[0].rank} y {GetBestFullHouse(sortedCards)[3].rank}", GetBestFullHouse(sortedCards));
-        if (IsFlush(sortedCards)) return ($"Color al {GetBestStraight(sortedCards)[0].rank}", GetBestStraight(sortedCards));
+        if (IsFlush(sortedCards)) return ($"Color al {GetBestFlush(sortedCards)[0].rank}", GetBestFlush(sortedCards));
         if (IsStraight(sortedCards)) return ($"Escalera al {GetBestStraight(sortedCards)[0].rank}", GetBestStraight(sortedCards));
-        if (IsThreeOfAKind(sortedCards)) return ($"Trío de {GetBestThreeOfAKind(sortedCards)[0].rank}", GetBestThreeOfAKind(sortedCards));
+        if (IsThreeOfAKind(sortedCards)) return ($"Trio de {GetBestThreeOfAKind(sortedCards)[0].rank}", GetBestThreeOfAKind(sortedCards));
         if (IsTwoPair(sortedCards)) return ($"DoblePareja de {GetBestTwoPair(sortedCards)[0].rank} y {GetBestTwoPair(sortedCards)[2].rank}", GetBestTwoPair(sortedCards));      
         if (IsOnePair(sortedCards)) return ($"Pareja de {GetBestOnePair(sortedCards)[0].rank}", GetBestOnePair(sortedCards));
 
@@ -380,11 +433,11 @@ public class DeckManager : MonoBehaviour
         {
             { "EscaleraReal", 10 },
             { "EscaleradeColor", 9 },
-            { "Póker", 8 },
+            { "Poker", 8 },
             { "FullHouse", 7 },
             { "Color", 6 },
             { "Escalera", 5 },
-            { "Trío", 4 },
+            { "Trio", 4 },
             { "DoblePareja", 3 },
             { "Pareja", 2 },
             { "CartaAlta", 1 }
