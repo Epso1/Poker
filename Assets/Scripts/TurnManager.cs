@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
+using Unity.Collections;
 
 public enum GameState
 {
@@ -17,9 +19,12 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private int currentPlayerIndex = 0;
     [SerializeField] private GameState gameState = GameState.PreFlop;
     [SerializeField] private int currentBet = 0;
-    [SerializeField] private int pot = 0;
+    [SerializeField] public int pot = 0;
     private DeckManager deckManager;
     [SerializeField] private int bigBlindAmount = 40;
+    [SerializeField] private TextMeshProUGUI raiseText;
+    [SerializeField] private TextMeshProUGUI callText;
+    private int hand = 0;
 
     private void Start()
     {
@@ -31,14 +36,18 @@ public class TurnManager : MonoBehaviour
 
     private void StartBettingRound()
     {
-        currentPlayerIndex = (GetBigBlindPlayerIndex() + 1)  % players.Count() ;
-        foreach (Player player in players)
+        if (gameState == GameState.PreFlop)
         {
-            player.ResetBet();
-        }
-        currentBet = GetBigBlindAmount();
-        pot = GetBigBlindAmount() + GetSmallBlindAmount();
-        StartPlayerTurn();
+            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();
+            foreach (Player player in players)
+            {
+                player.ResetBet();
+            }
+            currentBet = GetBigBlindAmount();
+            
+            pot = GetBigBlindAmount() + GetSmallBlindAmount();
+            StartPlayerTurn();
+        }   
     }
 
     private void StartPlayerTurn()
@@ -46,6 +55,7 @@ public class TurnManager : MonoBehaviour
         if (players[currentPlayerIndex].IsActive)
         {
             Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName}");
+            callText.text = "$" + currentBet.ToString();
             players[currentPlayerIndex].StartTurn(currentBet, pot);
         }
         else
@@ -151,20 +161,66 @@ public class TurnManager : MonoBehaviour
     private void DealFlopCards()
     {
         Debug.Log("Repartiendo cartas del Flop.");
+        deckManager.DealFlopCards();
     }
 
     private void DealTurnCard()
     {
         Debug.Log("Repartiendo carta del Turn.");
+        deckManager.DealTurnCard();
     }
 
     private void DealRiverCard()
     {
         Debug.Log("Repartiendo carta del River.");
+        deckManager.DealRiverCard();
     }
 
     private void EvaluateHands()
     {
         Debug.Log("Evaluando manos y determinando el ganador.");
+        deckManager.EvaluateHands();
     }
+
+    public void PlayerCall()
+    {
+        Player currentPlayer = players[currentPlayerIndex];
+
+        int callAmount = currentBet;
+        currentPlayer.Bet(callAmount);
+        pot += callAmount;
+
+        //GameObject.FindWithTag("BetWindow").SetActive(false);
+        AdvanceToNextPlayer();
+    }
+
+    public void PlayerRaise20()
+    {
+        string textToParse = raiseText.text.Remove(0 ,1); 
+        int initialValue = int.Parse(textToParse);        
+        int newValue = initialValue + 20;
+        raiseText.text = "$" + newValue.ToString();
+    }
+
+    public void PlayerRaise100()
+    {
+        string textToParse = raiseText.text.Remove(0, 1);
+        int initialValue = int.Parse(textToParse);
+        int newValue = initialValue + 100;
+        raiseText.text = "$" + newValue.ToString();
+    }
+
+    public void PlayerRaise()
+    {
+        Player currentPlayer = players[currentPlayerIndex];
+        string textToParse = raiseText.text.Remove(0, 1);
+        int amount = int.Parse(textToParse);
+        currentPlayer.Bet(amount + currentBet);
+        currentBet += amount;
+        pot += currentBet;
+
+        //GameObject.FindWithTag("BetWindow").SetActive(false);
+        AdvanceToNextPlayer();
+    } 
+    
 }

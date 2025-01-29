@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
+    TurnManager turnManager;
     public int CurrentBet { get; private set; }
     public bool IsActive { get; private set; } = true;
 
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
         smallBlindUIIcon.SetActive(false);
         bigBlindUIIcon.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
+        turnManager = FindObjectOfType<TurnManager>();
     }
     private void Start()
     {
@@ -146,7 +148,8 @@ public class Player : MonoBehaviour
     public void StartTurn(int currentBet, int pot)
     {
         // Mostrar UI para que el jugador elija una acción
-        Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse.");
+        //GameObject.FindWithTag("BetWindow").SetActive(true);        
+        Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse. El bote es de : ${pot}.");
     }
 
     public void Bet(int amount)
