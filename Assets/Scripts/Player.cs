@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using static DeckManager;
 
+
 public class Player : MonoBehaviour
 {
     [SerializeField] public string playerName;
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
     public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
+    public int CurrentBet { get; private set; }
+    public bool IsActive { get; private set; } = true;
 
     private void Awake()
     {
@@ -31,8 +34,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-       
-
+        
         //if (isHuman)
         //{
         //    UpdateUIHand();
@@ -69,7 +71,6 @@ public class Player : MonoBehaviour
         // Verificar que la mano tenga al menos dos cartas
         if (hand.Count >= 2 && isHuman)
         {
-            Debug.Log("Hello " + hand[0].cardObject.name);
             // Buscar el sprite de la primera carta
             Sprite card1Sprite = deckManager.FindSpriteByName(hand[0].cardObject.name);
             if (card1Sprite != null)
@@ -94,7 +95,7 @@ public class Player : MonoBehaviour
                 Debug.LogWarning($"Sprite for card {hand[1].cardObject.name} not found.");
             }
         }
-        else
+        else if (hand.Count < 2)
         {
             Debug.LogWarning("Not enough cards in hand to update UI.");
         }
@@ -141,6 +142,41 @@ public class Player : MonoBehaviour
         return role;
     }
 
-  
+
+    public void StartTurn(int currentBet, int pot)
+    {
+        // Mostrar UI para que el jugador elija una acción
+        Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse.");
+    }
+
+    public void Bet(int amount)
+    {
+        if (amount > credit)
+        {
+            Debug.LogWarning($"{playerName} no tiene suficientes fichas.");
+            return;
+        }
+
+        credit -= amount;
+        CurrentBet += amount;
+        Debug.Log($"{playerName} apuesta {amount}. Total apostado: {CurrentBet}");
+    }
+
+    public void Fold()
+    {
+        IsActive = false;
+        Debug.Log($"{playerName} se retira de la mano.");
+    }
+
+    public bool HasMatchedBet(int currentBet)
+    {
+        return CurrentBet >= currentBet;
+    }
+
+    public void ResetBet()
+    {
+        CurrentBet = 0;
+    }
+
 
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
-    [SerializeField] List<Player> players; // Lista de jugadores en la partida
+    [SerializeField] public List<Player> players; // Lista de jugadores en la partida
     [SerializeField] List<GameObject> cardPrefabs; // Lista de prefabs de cartas
     [SerializeField] Transform deckSpawnPoint; // Punto donde aparecerá el mazo    
     [SerializeField] List<Transform> communityCardsPositions; // Lista de puntos donde aperecerán las cartas comunitarias
@@ -26,15 +26,12 @@ public class DeckManager : MonoBehaviour
 
     private void Awake()
     {
-        CreateDeck(); // Crear las cartas en memoria
-        ShuffleDeck(); // Barajar el mazo
-        InstantiateDeck(); // Instanciar las cartas barajadas     
+       
     }
 
     void Start() 
     {
-        SetInitialRoles(); // Establecer los roles iniciales de los jugadores
-        DealInitialCards(); // Repartir las cartas iniciales
+        
     }
 
     private void Update()
@@ -46,7 +43,7 @@ public class DeckManager : MonoBehaviour
     }
 
     // Crear las cartas en memoria
-    private void CreateDeck()
+    public void CreateDeck()
     {
         foreach (GameObject prefab in cardPrefabs)
         {
@@ -56,7 +53,7 @@ public class DeckManager : MonoBehaviour
     }
 
     // Barajar el mazo
-    private void ShuffleDeck()
+    public void ShuffleDeck()
     {
         for (int i = deck.Count - 1; i > 0; i--)
         {
@@ -68,7 +65,7 @@ public class DeckManager : MonoBehaviour
     }
 
     // Instanciar las cartas en la escena
-    private void InstantiateDeck()
+    public void InstantiateDeck()
     {
         // Crear un GameObject contenedor llamado "Deck"
         if (deckContainer != null)
@@ -98,7 +95,7 @@ public class DeckManager : MonoBehaviour
     }
 
     // Repartir las cartas iniciales
-    private void DealInitialCards()
+    public void DealInitialCards()
     {
         foreach (Player player in players)
         {
@@ -120,11 +117,11 @@ public class DeckManager : MonoBehaviour
 
             player.UpdateUIHand();
         }
-        
-        DealFlopCards();
+
+        EvaluateHands();
     }
 
-    void UpdatePlayersUI()
+    private void UpdatePlayersUI()
     {
         foreach(Player player in players)
         {
@@ -133,7 +130,7 @@ public class DeckManager : MonoBehaviour
     }
 
     // Repartir las 3 cartas centrales
-    private void DealFlopCards()
+    public void DealFlopCards()
     {
         communityCards = new List<Card>();
 
@@ -150,10 +147,10 @@ public class DeckManager : MonoBehaviour
         }
 
         UpdateUICommunityCards();
-        DealTurnCard();
+        EvaluateHands();
     }
 
-    private void DealTurnCard()
+    public void DealTurnCard()
     {
         Card card = DrawCard();
         communityCards.Add(card);
@@ -161,10 +158,10 @@ public class DeckManager : MonoBehaviour
         card.cardObject.transform.Rotate(0, 180f, 0);
 
         UpdateUICommunityCards();
-        DealRiverCard();
+        EvaluateHands();
     }
 
-    private void DealRiverCard()
+    public void DealRiverCard()
     {
         Card card = DrawCard();
         communityCards.Add(card);
@@ -175,7 +172,7 @@ public class DeckManager : MonoBehaviour
         EvaluateHands();
     }
 
-    private void SetInitialRoles()
+    public void SetInitialRoles()
     {
         if (players.Count() >= 3)
         {
@@ -189,7 +186,7 @@ public class DeckManager : MonoBehaviour
             players[1].SetRole("Big Blind");
         }
     }
-    private void RotateRoles()
+    public void RotateRoles()
     {
         // Identificar los roles actuales
         int bigBlindIndex = players.FindIndex(player => player.GetRole() == "Big Blind");
@@ -218,10 +215,6 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    private void StartPreFlopBet()
-    {
-
-    }
 
     // Instanciar una carta en una posición específica
     private void InstantiateCardAtPosition(Card card, Transform position)
@@ -367,7 +360,7 @@ public class DeckManager : MonoBehaviour
         {
             // Combinar cartas personales y comunitarias
             List<Card> combinedCards = new List<Card>(player.hand);
-            combinedCards.AddRange(communityCards);
+            if (communityCards != null) combinedCards.AddRange(communityCards);
 
             // Evaluar la mejor jugada y las cartas que la forman
             (string handDescription, List<Card> handCards) = DetermineBestHand(combinedCards);
@@ -670,6 +663,15 @@ public class DeckManager : MonoBehaviour
     private List<Card> GetBestHighCard(List<Card> cards)
     {
         return cards.OrderByDescending(card => GetCardValue(card.rank)).Take(5).ToList();
+    }
+
+    public void StartNewHand()
+    {
+        CreateDeck(); // Crear las cartas en memoria
+        ShuffleDeck(); // Barajar el mazo
+        InstantiateDeck(); // Instanciar las cartas barajadas   
+        SetInitialRoles(); // Establecer los roles iniciales de los jugadores
+        DealInitialCards(); // Repartir las cartas iniciales
     }
 
 }
