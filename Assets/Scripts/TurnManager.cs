@@ -21,10 +21,12 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private int currentBet = 0;
     [SerializeField] public int pot = 0;
     private DeckManager deckManager;
+    [SerializeField] private int smallBlindAmount = 20;
     [SerializeField] private int bigBlindAmount = 40;
     [SerializeField] private TextMeshProUGUI raiseText;
     [SerializeField] private TextMeshProUGUI callText;
     private int hand = 0;
+    private bool hasBigBlindActed;
 
     private void Start()
     {
@@ -36,16 +38,20 @@ public class TurnManager : MonoBehaviour
 
     private void StartBettingRound()
     {
+        
         if (gameState == GameState.PreFlop)
         {
-            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();
             foreach (Player player in players)
             {
                 player.ResetBet();
             }
-            currentBet = GetBigBlindAmount();
-            
-            pot = GetBigBlindAmount() + GetSmallBlindAmount();
+            int bigBlindPlayerIndex = GetBigBlindPlayerIndex();
+            int smallBlindPlayerIndex = GetSmallBlindPlayerIndex();
+            players[smallBlindPlayerIndex].Bet(smallBlindAmount);
+            players[bigBlindPlayerIndex].Bet(bigBlindAmount);
+            pot += smallBlindAmount + bigBlindAmount;
+            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();           
+            currentBet = bigBlindAmount;            
             StartPlayerTurn();
         }
         else
@@ -59,7 +65,8 @@ public class TurnManager : MonoBehaviour
     {
         if (players[currentPlayerIndex].IsActive)
         {
-            Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName}");
+            Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName} - Apuesta actual del jugador: {players[currentPlayerIndex].CurrentBet}");
+
             callText.text = "$" + currentBet.ToString();
             players[currentPlayerIndex].StartTurn(currentBet, pot);
         }
@@ -86,7 +93,9 @@ public class TurnManager : MonoBehaviour
 
     private bool IsRoundComplete()
     {
-        return players.All(player => !player.IsActive || player.HasMatchedBet(currentBet));
+        return players.All(player => !player.IsActive || player.HasMatchedBet(currentBet))
+            && (players[currentPlayerIndex].GetRole() != "Big Blind")
+            && hasBigBlindActed;
     }
 
     private void ProceedToNextGameState()
@@ -155,15 +164,9 @@ public class TurnManager : MonoBehaviour
     {
         return players.FindIndex(player => player.GetRole() == "Big Blind");
     }
-
-    private int GetBigBlindAmount()
+    private int GetSmallBlindPlayerIndex()
     {
-        return bigBlindAmount;
-    }
-
-    private int GetSmallBlindAmount()
-    {
-        return bigBlindAmount / 2;
+        return players.FindIndex(player => player.GetRole() == "Small Blind");
     }
 
     private void DealFlopCards()
@@ -194,7 +197,7 @@ public class TurnManager : MonoBehaviour
     {
         Player currentPlayer = players[currentPlayerIndex];
 
-        int callAmount = currentBet - currentPlayer.CurrentBet; ;
+        int callAmount = currentBet - currentPlayer.CurrentBet;
         currentPlayer.Bet(callAmount);
         pot += callAmount;
 

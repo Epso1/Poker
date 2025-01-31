@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
     TurnManager turnManager;
-    public int CurrentBet { get; private set; }
+    public int CurrentBet;
     public bool IsActive { get; private set; } = true;
 
     private void Awake()
@@ -163,6 +163,10 @@ public class Player : MonoBehaviour
         credit -= amount;
         CurrentBet += amount;
         Debug.Log($"{playerName} apuesta {amount}. Total apostado: {CurrentBet}");
+        if (role == "Big Blind")
+        {
+
+        }
     }
 
     public void Fold()
