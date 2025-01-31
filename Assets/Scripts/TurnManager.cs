@@ -47,7 +47,12 @@ public class TurnManager : MonoBehaviour
             
             pot = GetBigBlindAmount() + GetSmallBlindAmount();
             StartPlayerTurn();
-        }   
+        }
+        else
+        {
+            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();
+            StartPlayerTurn();
+        }
     }
 
     private void StartPlayerTurn()
@@ -91,14 +96,17 @@ public class TurnManager : MonoBehaviour
             case GameState.PreFlop:
                 gameState = GameState.Flop;
                 DealFlopCards();
+                StartBettingRound();
                 break;
             case GameState.Flop:
                 gameState = GameState.Turn;
                 DealTurnCard();
+                StartBettingRound();
                 break;
             case GameState.Turn:
                 gameState = GameState.River;
                 DealRiverCard();
+                StartBettingRound();
                 break;
             case GameState.River:
                 gameState = GameState.Showdown;
@@ -186,7 +194,7 @@ public class TurnManager : MonoBehaviour
     {
         Player currentPlayer = players[currentPlayerIndex];
 
-        int callAmount = currentBet;
+        int callAmount = currentBet - currentPlayer.CurrentBet; ;
         currentPlayer.Bet(callAmount);
         pot += callAmount;
 
@@ -215,8 +223,9 @@ public class TurnManager : MonoBehaviour
         Player currentPlayer = players[currentPlayerIndex];
         string textToParse = raiseText.text.Remove(0, 1);
         int amount = int.Parse(textToParse);
-        currentPlayer.Bet(amount + currentBet);
-        currentBet += amount;
+        int raiseAmount = amount - currentPlayer.CurrentBet;
+        currentPlayer.Bet(raiseAmount);
+        currentBet += raiseAmount;
         pot += currentBet;
 
         //GameObject.FindWithTag("BetWindow").SetActive(false);
