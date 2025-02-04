@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class DeckManager : MonoBehaviour
 {
@@ -9,11 +12,12 @@ public class DeckManager : MonoBehaviour
     [SerializeField] List<GameObject> cardPrefabs; // Lista de prefabs de cartas
     [SerializeField] Transform deckSpawnPoint; // Punto donde aparecerá el mazo    
     [SerializeField] List<Transform> communityCardsPositions; // Lista de puntos donde aperecerán las cartas comunitarias
-    private List<Card> deck = new List<Card>(); // Lista de cartas en el mazo
-    private GameObject deckContainer; // Contenedor del mazo    
-    [SerializeField] public List<Card> communityCards; // Lista de cartas comunitarias
-    [SerializeField] public Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
+    List<Card> deck = new List<Card>(); // Lista de cartas en el mazo
+    GameObject deckContainer; // Contenedor del mazo    
+    List<Card> communityCards = new List<Card>(); // Lista de cartas comunitarias
+    [SerializeField] Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
     [SerializeField] Image[] cardUIImages;
+    [SerializeField] TextMeshProUGUI potText;
 
     // Clase que representa una carta
     public class Card
@@ -22,24 +26,6 @@ public class DeckManager : MonoBehaviour
         public string rank; // Rango: 2, 3, ..., J, Q, K, Ace
         public GameObject prefab; // Prefab asociado a la carta
         public GameObject cardObject; // Instancia del prefab 
-    }
-
-    private void Awake()
-    {
-       
-    }
-
-    void Start() 
-    {
-        
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.KeypadMultiply))
-        {
-            ResetDeck();
-        }
     }
 
     // Crear las cartas en memoria
@@ -57,7 +43,7 @@ public class DeckManager : MonoBehaviour
     {
         for (int i = deck.Count - 1; i > 0; i--)
         {
-            int randomIndex = Random.Range(0, i + 1);
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
             var temp = deck[i];
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
@@ -121,19 +107,9 @@ public class DeckManager : MonoBehaviour
         EvaluateHands();
     }
 
-    private void UpdatePlayersUI()
-    {
-        foreach(Player player in players)
-        {
-            player.UpdateUIHand();
-        }
-    }
-
     // Repartir las 3 cartas centrales
     public void DealFlopCards()
     {
-        communityCards = new List<Card>();
-
         for (int i = 0; i < 3; i++) // Reparte 3 cartas
         {
             Card card = DrawCard();
@@ -150,6 +126,7 @@ public class DeckManager : MonoBehaviour
         EvaluateHands();
     }
 
+    // Repartir las carta de Turn
     public void DealTurnCard()
     {
         Card card = DrawCard();
@@ -161,6 +138,7 @@ public class DeckManager : MonoBehaviour
         EvaluateHands();
     }
 
+    // Repartir las carta de River
     public void DealRiverCard()
     {
         Card card = DrawCard();
@@ -171,7 +149,7 @@ public class DeckManager : MonoBehaviour
         UpdateUICommunityCards();
         EvaluateHands();
     }
-
+    // Establecer roles iniciales
     public void SetInitialRoles()
     {
         if (players.Count() >= 3)
@@ -186,6 +164,7 @@ public class DeckManager : MonoBehaviour
             players[1].SetRole("Big Blind");
         }
     }
+    // Rotar roles
     public void RotateRoles()
     {
         // Identificar los roles actuales
@@ -304,38 +283,32 @@ public class DeckManager : MonoBehaviour
         }
 
         return secondUppercase; // Return -1 if the second uppercase letter wasn't found
-    }
+    }   
 
-    public void ResetDeck()
-    {
-        if (deckContainer != null) Destroy(deckContainer); // Elimina el contenedor y todas las cartas dentro
-        deck.Clear();
-        communityCards.Clear();
-        foreach (Player player in players) 
-        {
-            player.hand.Clear();
-        }       
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
-        foreach (GameObject card in cards) Destroy(card.gameObject);  
-
-        CreateDeck(); // Crear las cartas en memoria
-        ShuffleDeck(); // Barajar el mazo
-        InstantiateDeck(); // Instanciar las cartas barajadas
-        RotateRoles(); // Cambia los roles de los jugadores para la nueva mano
-        DealInitialCards(); // Repartir las cartas iniciales
-    }
-
+    // Actualizar las cartas que se muestran en la UI
     void UpdateUICommunityCards()
     {
-        int index = 0;
-        foreach (Card card in communityCards)
+        for (int i = 0; i < cardUIImages.Length; i++)
         {
-            Sprite cardSprite = FindSpriteByName(card.cardObject.name);
-            cardUIImages[index].sprite = cardSprite;
-            cardUIImages[index].gameObject.SetActive(true);
-            index++;
-        }   
+            if (communityCards.Count > i)
+            {
+                Sprite cardSprite = FindSpriteByName(communityCards[i].cardObject.name);
+                cardUIImages[i].sprite = cardSprite;
+            }
+            else
+            {
+                cardUIImages[i].sprite = null;
+            }
+
+            cardUIImages[i].gameObject.SetActive(true);
+        }
     }
+
+    // Actualizar la cifra del bote
+    public void UpdateUIPot(int pot)
+    {
+        potText.text = "TOTAL POT: " + string.Format("${0:N0}", pot);
+    } 
 
     // Método auxiliar para encontrar un sprite por nombre
     public Sprite FindSpriteByName(string name)
@@ -358,24 +331,34 @@ public class DeckManager : MonoBehaviour
 
         foreach (Player player in players)
         {
-            // Combinar cartas personales y comunitarias
-            List<Card> combinedCards = new List<Card>(player.hand);
-            if (communityCards != null) combinedCards.AddRange(communityCards);
-
-            // Evaluar la mejor jugada y las cartas que la forman
-            (string handDescription, List<Card> handCards) = DetermineBestHand(combinedCards);
-
-            // Mostrar la jugada del jugador
-            Debug.Log($"Jugador {player.playerName}: {handDescription}");
-
-            //Debug.Log($"Comparando mano del jugador {player.playerName} con la mejor mano actual.");
-            // Comparar con la mejor mano actual
-
-            if (bestHandCards != null)
+            if (player.GetComponent<Player>().isActive)
             {
-                if (CompareHands(bestHandCards, handCards) == -1)
+                // Combinar cartas personales y comunitarias
+                List<Card> combinedCards = new List<Card>(player.hand);
+                if (communityCards != null) combinedCards.AddRange(communityCards);
+
+                // Evaluar la mejor jugada y las cartas que la forman
+                (string handDescription, List<Card> handCards) = DetermineBestHand(combinedCards);
+
+                // Mostrar la jugada del jugador
+                Debug.Log($"Jugador {player.playerName}: {handDescription}");
+
+                //Debug.Log($"Comparando mano del jugador {player.playerName} con la mejor mano actual.");
+                // Comparar con la mejor mano actual
+
+                if (bestHandCards != null)
                 {
-                    //Debug.Log($"La mano del jugador {player.playerName} es superior a la mejor mano actual.");
+                    if (CompareHands(bestHandCards, handCards) == -1)
+                    {
+                        //Debug.Log($"La mano del jugador {player.playerName} es superior a la mejor mano actual.");
+                        bestPlayer = player;
+                        bestHandDescription = handDescription;
+                        bestHandCards = handCards;
+                    }
+                }
+                else
+                {
+                    //Debug.Log($"No hay bestHandCards.");
                     bestPlayer = player;
                     bestHandDescription = handDescription;
                     bestHandCards = handCards;
@@ -383,11 +366,10 @@ public class DeckManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log($"No hay bestHandCards.");
-                bestPlayer = player;
-                bestHandDescription = handDescription;
-                bestHandCards = handCards;
+                // Mostrar la jugada del jugador
+                Debug.Log($"Jugador {player.playerName} está inactivo.");
             }
+           
         }
 
         // Mostrar al ganador
@@ -672,6 +654,29 @@ public class DeckManager : MonoBehaviour
         InstantiateDeck(); // Instanciar las cartas barajadas   
         SetInitialRoles(); // Establecer los roles iniciales de los jugadores
         DealInitialCards(); // Repartir las cartas iniciales
+    }
+
+    public void ResetDeck()
+    {
+        if (deckContainer != null) Destroy(deckContainer); // Elimina el contenedor y todas las cartas dentro
+
+        deck.Clear();
+
+        communityCards.Clear();
+
+        foreach (Player player in players)
+        {
+            player.hand.Clear();
+        }
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+        foreach (GameObject card in cards) Destroy(card.gameObject);
+
+        CreateDeck(); // Crear las cartas en memoria
+        ShuffleDeck(); // Barajar el mazo
+        InstantiateDeck(); // Instanciar las cartas barajadas
+        RotateRoles(); // Cambia los roles de los jugadores para la nueva mano
+        DealInitialCards(); // Repartir las cartas iniciales
+        UpdateUICommunityCards();
     }
 
 }

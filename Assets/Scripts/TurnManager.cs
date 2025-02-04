@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using Unity.Collections;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -15,18 +15,20 @@ public enum GameState
 
 public class TurnManager : MonoBehaviour
 {
-    private List<Player> players = new List<Player>();
     [SerializeField] private int currentPlayerIndex = 0;
     [SerializeField] private GameState gameState = GameState.PreFlop;
     [SerializeField] private int currentBet = 0;
     [SerializeField] public int pot = 0;
-    private DeckManager deckManager;
-    [SerializeField] private int smallBlindAmount = 20;
-    [SerializeField] private int bigBlindAmount = 40;
-    [SerializeField] private TextMeshProUGUI raiseText;
-    [SerializeField] private TextMeshProUGUI callText;
-    private int hand = 0;
-    private bool hasBigBlindActed;
+    [SerializeField] int smallBlindAmount = 20;
+    [SerializeField] int bigBlindAmount = 40;
+    [SerializeField] TextMeshProUGUI raiseText;
+    [SerializeField] TextMeshProUGUI callText;
+    [SerializeField] Button callButton;
+    [SerializeField] TextMeshProUGUI callButtonText;
+    [SerializeField] Button raiseButton;
+    [SerializeField] TextMeshProUGUI raiseButtonText;
+    List<Player> players = new List<Player>();
+    DeckManager deckManager;
 
     private void Start()
     {
@@ -41,6 +43,8 @@ public class TurnManager : MonoBehaviour
         
         if (gameState == GameState.PreFlop)
         {
+            pot = 0;
+            deckManager.UpdateUIPot(pot);
             foreach (Player player in players)
             {
                 player.ResetBet();
@@ -50,6 +54,7 @@ public class TurnManager : MonoBehaviour
             players[smallBlindPlayerIndex].Bet(smallBlindAmount);
             players[bigBlindPlayerIndex].Bet(bigBlindAmount);
             pot += smallBlindAmount + bigBlindAmount;
+            deckManager.UpdateUIPot(pot);
             currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();           
             currentBet = bigBlindAmount;            
             StartPlayerTurn();
@@ -63,11 +68,24 @@ public class TurnManager : MonoBehaviour
 
     private void StartPlayerTurn()
     {
-        if (players[currentPlayerIndex].IsActive)
+        if (players[currentPlayerIndex].isActive)
         {
-            Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName} - Apuesta actual del jugador: {players[currentPlayerIndex].CurrentBet}");
+            Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName} - Apuesta actual del jugador: {players[currentPlayerIndex].currentBet}");
+            int callAmount = currentBet - players[currentPlayerIndex].currentBet;
+            if (callAmount == 0)
+            {
+                callButtonText.text = "CHECK";
+                raiseButtonText.text = "BET";
+                callText.text = "";
 
-            callText.text = "$" + currentBet.ToString();
+            }
+            else
+            {
+                callButtonText.text = "CALL";
+                raiseButtonText.text = "RAISE";
+                callText.text = "$" + callAmount.ToString();
+            }
+            
             players[currentPlayerIndex].StartTurn(currentBet, pot);
         }
         else
@@ -83,6 +101,12 @@ public class TurnManager : MonoBehaviour
         if (IsRoundComplete())
         {
             Debug.Log("Ronda completa. Avanzando a la siguiente fase.");
+
+            foreach (var player in players)
+            {
+                player.hasActed = false;
+            }
+
             ProceedToNextGameState();
         }
         else
@@ -93,9 +117,12 @@ public class TurnManager : MonoBehaviour
 
     private bool IsRoundComplete()
     {
-        return players.All(player => !player.IsActive || player.HasMatchedBet(currentBet))
-            && (players[currentPlayerIndex].GetRole() != "Big Blind")
-            && hasBigBlindActed;
+        // Si solo queda un jugador activo, la ronda termina
+        if (players.Count(player => player.isActive) == 1) return true;
+
+        // Si todos los jugadores activos han igualado la apuesta más alta y han actuado, la ronda termina
+        return players.All(player => !player.isActive || (player.hasActed && player.HasMatchedBet(currentBet)) );
+   
     }
 
     private void ProceedToNextGameState()
@@ -103,62 +130,41 @@ public class TurnManager : MonoBehaviour
         switch (gameState)
         {
             case GameState.PreFlop:
+                Debug.Log("***** Gamestate: preflop => flop *****");
                 gameState = GameState.Flop;
                 DealFlopCards();
                 StartBettingRound();
                 break;
             case GameState.Flop:
+                Debug.Log("***** Gamestate: flop => turn *****");
                 gameState = GameState.Turn;
                 DealTurnCard();
                 StartBettingRound();
                 break;
             case GameState.Turn:
+                Debug.Log("***** Gamestate: turn => river *****");
                 gameState = GameState.River;
                 DealRiverCard();
                 StartBettingRound();
                 break;
             case GameState.River:
+                Debug.Log("***** Gamestate: river => showdown *****");
                 gameState = GameState.Showdown;
                 EvaluateHands();
-                return;
+                Debug.Log("Partida terminada. repartiendo una nueva mano.");
+                ProceedToNextGameState();
+                break;
+            case GameState.Showdown:
+                Debug.Log("***** Gamestate: showdown => preflop *****");
+                gameState = GameState.PreFlop;
+                deckManager.ResetDeck();
+                StartBettingRound();
+                break;
         }
-        StartBettingRound();
+       
     }
 
-    public void PlayerAction(string action, int amount = 0)
-    {
-        Player currentPlayer = players[currentPlayerIndex];
-
-        switch (action.ToLower())
-        {
-            case "call":
-                int callAmount = currentBet - currentPlayer.CurrentBet;
-                currentPlayer.Bet(callAmount);
-                pot += callAmount;
-                break;
-            case "raise":
-                if (amount > currentBet)
-                {
-                    int raiseAmount = amount - currentPlayer.CurrentBet;
-                    currentPlayer.Bet(raiseAmount);
-                    currentBet = amount;
-                    pot += raiseAmount;
-                }
-                else
-                {
-                    Debug.LogWarning("La cantidad de aumento debe ser mayor que la apuesta actual.");
-                    return;
-                }
-                break;
-            case "fold":
-                currentPlayer.Fold();
-                break;
-            default:
-                Debug.LogWarning("Acción no válida.");
-                return;
-        }
-        AdvanceToNextPlayer();
-    }
+    
 
     private int GetBigBlindPlayerIndex()
     {
@@ -197,15 +203,17 @@ public class TurnManager : MonoBehaviour
     {
         Player currentPlayer = players[currentPlayerIndex];
 
-        int callAmount = currentBet - currentPlayer.CurrentBet;
+        int callAmount = currentBet - currentPlayer.currentBet;
         currentPlayer.Bet(callAmount);
         pot += callAmount;
+        deckManager.UpdateUIPot(pot);
 
         //GameObject.FindWithTag("BetWindow").SetActive(false);
+        currentPlayer.GetComponent<Player>().hasActed = true;
         AdvanceToNextPlayer();
     }
 
-    public void PlayerRaise20()
+    public void RaiseTextAdd20()
     {
         string textToParse = raiseText.text.Remove(0 ,1); 
         int initialValue = int.Parse(textToParse);        
@@ -213,12 +221,17 @@ public class TurnManager : MonoBehaviour
         raiseText.text = "$" + newValue.ToString();
     }
 
-    public void PlayerRaise100()
+    public void RaiseTextSubtract20()
     {
         string textToParse = raiseText.text.Remove(0, 1);
         int initialValue = int.Parse(textToParse);
-        int newValue = initialValue + 100;
-        raiseText.text = "$" + newValue.ToString();
+        int newValue = initialValue - 20;
+        if (newValue > 20)
+        {
+            raiseText.text = "$" + newValue.ToString();
+        }
+        else { raiseText.text = "$20"; }
+        
     }
 
     public void PlayerRaise()
@@ -226,13 +239,22 @@ public class TurnManager : MonoBehaviour
         Player currentPlayer = players[currentPlayerIndex];
         string textToParse = raiseText.text.Remove(0, 1);
         int amount = int.Parse(textToParse);
-        int raiseAmount = amount - currentPlayer.CurrentBet;
+        int callAmount = currentBet - currentPlayer.currentBet;
+        int raiseAmount = amount + callAmount;
         currentPlayer.Bet(raiseAmount);
-        currentBet += raiseAmount;
-        pot += currentBet;
+        currentBet += amount;
+        pot += raiseAmount;
+        deckManager.UpdateUIPot(pot);
 
         //GameObject.FindWithTag("BetWindow").SetActive(false);
+        currentPlayer.GetComponent<Player>().hasActed = true;
         AdvanceToNextPlayer();
     } 
-    
+    public void PlayerFold()
+    {
+        Player currentPlayer = players[currentPlayerIndex];
+        currentPlayer.GetComponent<Player>().Fold();
+        currentPlayer.GetComponent<Player>().hasActed = true;
+        AdvanceToNextPlayer();
+    }
 }

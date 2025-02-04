@@ -22,9 +22,9 @@ public class Player : MonoBehaviour
     public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
-    TurnManager turnManager;
-    public int CurrentBet;
-    public bool IsActive { get; private set; } = true;
+    public int currentBet;
+    public bool hasActed = false;
+    public bool isActive = true;
 
     private void Awake()
     {
@@ -32,16 +32,9 @@ public class Player : MonoBehaviour
         smallBlindUIIcon.SetActive(false);
         bigBlindUIIcon.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
-        turnManager = FindObjectOfType<TurnManager>();
     }
     private void Start()
     {
-        
-        //if (isHuman)
-        //{
-        //    UpdateUIHand();
-        //}     
-
         if (playerNameText != null)
         {
             UpdatePlayerNameText();
@@ -63,7 +56,7 @@ public class Player : MonoBehaviour
         playerNameText.text = playerName;
     }
 
-    void UpdateCreditText()
+    public void UpdateCreditText()
     {
         playerCreditText.text = FormatCurrency(credit);
     }
@@ -161,28 +154,28 @@ public class Player : MonoBehaviour
         }
 
         credit -= amount;
-        CurrentBet += amount;
-        Debug.Log($"{playerName} apuesta {amount}. Total apostado: {CurrentBet}");
-        if (role == "Big Blind")
+        if (playerCreditText != null)
         {
-
+            UpdateCreditText();
         }
+        currentBet += amount;
+        Debug.Log($"{playerName} apuesta {amount}. Total apostado: {currentBet}");
     }
 
     public void Fold()
     {
-        IsActive = false;
+        isActive = false;
         Debug.Log($"{playerName} se retira de la mano.");
     }
 
     public bool HasMatchedBet(int currentBet)
     {
-        return CurrentBet >= currentBet;
+        return this.currentBet >= currentBet;
     }
 
     public void ResetBet()
     {
-        CurrentBet = 0;
+        currentBet = 0;
     }
 
 
