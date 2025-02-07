@@ -11,23 +11,27 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform card1Position;
     [SerializeField] public Transform card2Position;
     [SerializeField] TextMeshProUGUI playerNameText;
-    [SerializeField] TextMeshProUGUI playerCreditText;
+    [SerializeField] public TextMeshProUGUI playerCreditText;
     [SerializeField] Image card1Image;
     [SerializeField] Image card2Image;
     [SerializeField] public int credit;
     [SerializeField] GameObject dealerUIIcon;
     [SerializeField] GameObject smallBlindUIIcon;
     [SerializeField] GameObject bigBlindUIIcon;
+    [SerializeField] public Image playerTurnImage;
+    [SerializeField] TextMeshProUGUI currentBetTableText;
+
     public bool isHuman;
     public string role;
     public List<Card> hand = new List<Card>();
     DeckManager deckManager;
     public int currentBet;
     public bool hasActed = false;
-    public bool isActive = true;
-
+    public bool isPlayerActive = true;
+    Color playerTurnImageInitialColor;
     private void Awake()
     {
+        playerTurnImageInitialColor = playerTurnImage.color;
         dealerUIIcon.SetActive(false);
         smallBlindUIIcon.SetActive(false);
         bigBlindUIIcon.SetActive(false);
@@ -59,6 +63,11 @@ public class Player : MonoBehaviour
     public void UpdateCreditText()
     {
         playerCreditText.text = FormatCurrency(credit);
+    }
+
+    public void UpdateUICurrentBet()
+    {
+        currentBetTableText.text = string.Format("${0:N0}", currentBet);
     }
 
     public void UpdateUIHand()
@@ -141,7 +150,8 @@ public class Player : MonoBehaviour
     public void StartTurn(int currentBet, int pot)
     {
         // Mostrar UI para que el jugador elija una acción
-        //GameObject.FindWithTag("BetWindow").SetActive(true);        
+        //GameObject.FindWithTag("BetWindow").SetActive(true);
+        playerTurnImage.color = playerTurnImageInitialColor;
         Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse. El bote es de : ${pot}.");
     }
 
@@ -159,12 +169,13 @@ public class Player : MonoBehaviour
             UpdateCreditText();
         }
         currentBet += amount;
+        UpdateUICurrentBet();
         Debug.Log($"{playerName} apuesta {amount}. Total apostado: {currentBet}");
     }
 
     public void Fold()
     {
-        isActive = false;
+        isPlayerActive = false;
         Debug.Log($"{playerName} se retira de la mano.");
     }
 

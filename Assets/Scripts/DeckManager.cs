@@ -323,7 +323,7 @@ public class DeckManager : MonoBehaviour
         return null;
     }
 
-    public void EvaluateHands()
+    public Player EvaluateHands()
     {
         Player bestPlayer = null;
         string bestHandDescription = null;
@@ -331,7 +331,7 @@ public class DeckManager : MonoBehaviour
 
         foreach (Player player in players)
         {
-            if (player.GetComponent<Player>().isActive)
+            if (player.GetComponent<Player>().isPlayerActive)
             {
                 // Combinar cartas personales y comunitarias
                 List<Card> combinedCards = new List<Card>(player.hand);
@@ -377,6 +377,8 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log($"Mejor mano: {bestHandDescription} de {bestPlayer.playerName}");
         }
+
+        return bestPlayer;
     }
 
 

@@ -29,13 +29,13 @@ public class TurnManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI raiseButtonText;
     List<Player> players = new List<Player>();
     DeckManager deckManager;
-
+    private Player winner;
     private void Start()
     {
         deckManager = FindObjectOfType<DeckManager>();
         players = deckManager.players;
         deckManager.StartNewHand();
-        Invoke("StartBettingRound", 1f);
+        StartBettingRound();
     }
 
     private void StartBettingRound()
@@ -48,6 +48,8 @@ public class TurnManager : MonoBehaviour
             foreach (Player player in players)
             {
                 player.ResetBet();
+                player.UpdateUICurrentBet();
+                if (!player.isPlayerActive) player.isPlayerActive = true;
             }
             int bigBlindPlayerIndex = GetBigBlindPlayerIndex();
             int smallBlindPlayerIndex = GetSmallBlindPlayerIndex();
@@ -68,7 +70,7 @@ public class TurnManager : MonoBehaviour
 
     private void StartPlayerTurn()
     {
-        if (players[currentPlayerIndex].isActive)
+        if (players[currentPlayerIndex].isPlayerActive)
         {
             Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName} - Apuesta actual del jugador: {players[currentPlayerIndex].currentBet}");
             int callAmount = currentBet - players[currentPlayerIndex].currentBet;
@@ -85,7 +87,11 @@ public class TurnManager : MonoBehaviour
                 raiseButtonText.text = "RAISE";
                 callText.text = "$" + callAmount.ToString();
             }
-            
+            foreach (Player player in players)
+            {
+                Color alphaColor = new Color(0, 0, 0, 0);
+                player.playerTurnImage.color = alphaColor;
+            }
             players[currentPlayerIndex].StartTurn(currentBet, pot);
         }
         else
@@ -118,11 +124,10 @@ public class TurnManager : MonoBehaviour
     private bool IsRoundComplete()
     {
         // Si solo queda un jugador activo, la ronda termina
-        if (players.Count(player => player.isActive) == 1) return true;
+        if (players.Count(player => player.isPlayerActive) == 1) return true;
 
         // Si todos los jugadores activos han igualado la apuesta más alta y han actuado, la ronda termina
-        return players.All(player => !player.isActive || (player.hasActed && player.HasMatchedBet(currentBet)) );
-   
+        return players.All(player => !player.isPlayerActive || (player.hasActed && player.HasMatchedBet(currentBet)) );   
     }
 
     private void ProceedToNextGameState()
@@ -160,11 +165,8 @@ public class TurnManager : MonoBehaviour
                 deckManager.ResetDeck();
                 StartBettingRound();
                 break;
-        }
-       
-    }
-
-    
+        }       
+    }    
 
     private int GetBigBlindPlayerIndex()
     {
@@ -196,7 +198,16 @@ public class TurnManager : MonoBehaviour
     private void EvaluateHands()
     {
         Debug.Log("Evaluando manos y determinando el ganador.");
-        deckManager.EvaluateHands();
+        winner = deckManager.EvaluateHands();
+        Debug.Log($"El ganador {winner.playerName}, se lleva un bote de {pot}.");
+        foreach(Player player in players)
+        {
+            if (player == winner)
+            {
+                player.credit += pot;
+                if (player.playerCreditText != null) player.UpdateCreditText();
+            }
+        }
     }
 
     public void PlayerCall()
