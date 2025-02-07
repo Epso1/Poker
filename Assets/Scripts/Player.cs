@@ -15,11 +15,16 @@ public class Player : MonoBehaviour
     [SerializeField] Image card1Image;
     [SerializeField] Image card2Image;
     [SerializeField] public int credit;
+    [SerializeField] GameObject dealerTableUIIcon;
+    [SerializeField] GameObject smallBlindTableUIIcon;
+    [SerializeField] GameObject bigBlindTableUIIcon;
+    [SerializeField] public Image playerTurnImage;
+    [SerializeField] TextMeshProUGUI currentBetTableText;
+    [SerializeField] GameObject checkUIIcon;
+    [SerializeField] GameObject foldUIIcon;
     [SerializeField] GameObject dealerUIIcon;
     [SerializeField] GameObject smallBlindUIIcon;
     [SerializeField] GameObject bigBlindUIIcon;
-    [SerializeField] public Image playerTurnImage;
-    [SerializeField] TextMeshProUGUI currentBetTableText;
 
     public bool isHuman;
     public string role;
@@ -32,9 +37,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerTurnImageInitialColor = playerTurnImage.color;
-        dealerUIIcon.SetActive(false);
-        smallBlindUIIcon.SetActive(false);
-        bigBlindUIIcon.SetActive(false);
+        dealerTableUIIcon.SetActive(false);
+        smallBlindTableUIIcon.SetActive(false);
+        bigBlindTableUIIcon.SetActive(false);
+        checkUIIcon.SetActive(false);
+        foldUIIcon.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
     }
     private void Start()
@@ -65,9 +72,9 @@ public class Player : MonoBehaviour
         playerCreditText.text = FormatCurrency(credit);
     }
 
-    public void UpdateUICurrentBet()
+    public void UpdateTableUICurrentBet()
     {
-        currentBetTableText.text = string.Format("${0:N0}", currentBet);
+        currentBetTableText.text = FormatCurrency(currentBet);
     }
 
     public void UpdateUIHand()
@@ -104,11 +111,49 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Not enough cards in hand to update UI.");
         }
     }
+    public void UpdateUIRole()
+    {
+        if (dealerUIIcon != null && smallBlindUIIcon != null && bigBlindUIIcon != null) 
+        {
+            switch (role)
+            {
+                case "Dealer":
+                    dealerUIIcon.SetActive(true);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(false);
+                    break;
+
+                case "Small Blind":
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(true);
+                    bigBlindUIIcon.SetActive(false);
+                    break;
+
+                case "Big Blind":
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(true);
+                    break;
+                
+                default:
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(false);
+                    break;
+            }           
+        }
+    }
+    public void ResetStateIcons()
+    {
+        checkUIIcon.SetActive(false);
+        foldUIIcon.SetActive(false);
+    }
+
     public void ResetUIRole()
     {
-        dealerUIIcon.SetActive(false);
-        smallBlindUIIcon.SetActive(false);
-        bigBlindUIIcon.SetActive(false);
+        dealerTableUIIcon.SetActive(false);
+        smallBlindTableUIIcon.SetActive(false);
+        bigBlindTableUIIcon.SetActive(false);
     }
     public void SetRole(string newRole)
     {
@@ -116,27 +161,27 @@ public class Player : MonoBehaviour
         switch (role)
         {
             case "Dealer":
-                dealerUIIcon.SetActive(true);
-                smallBlindUIIcon.SetActive(false);
-                bigBlindUIIcon.SetActive(false);
+                dealerTableUIIcon.SetActive(true);
+                smallBlindTableUIIcon.SetActive(false);
+                bigBlindTableUIIcon.SetActive(false);
                 break;
 
             case "Small Blind":
-                dealerUIIcon.SetActive(false);
-                smallBlindUIIcon.SetActive(true);
-                bigBlindUIIcon.SetActive(false);
+                dealerTableUIIcon.SetActive(false);
+                smallBlindTableUIIcon.SetActive(true);
+                bigBlindTableUIIcon.SetActive(false);
                 break;
 
             case "Big Blind":
-                dealerUIIcon.SetActive(false);
-                smallBlindUIIcon.SetActive(false);
-                bigBlindUIIcon.SetActive(true);
+                dealerTableUIIcon.SetActive(false);
+                smallBlindTableUIIcon.SetActive(false);
+                bigBlindTableUIIcon.SetActive(true);
                 break;
 
             default:
-                dealerUIIcon.SetActive(false);
-                smallBlindUIIcon.SetActive(false);
-                bigBlindUIIcon.SetActive(false);
+                dealerTableUIIcon.SetActive(false);
+                smallBlindTableUIIcon.SetActive(false);
+                bigBlindTableUIIcon.SetActive(false);
                 break;
         }
     }
@@ -169,13 +214,17 @@ public class Player : MonoBehaviour
             UpdateCreditText();
         }
         currentBet += amount;
-        UpdateUICurrentBet();
+        UpdateTableUICurrentBet();
+        foldUIIcon.SetActive(false);
+        checkUIIcon.SetActive(true);
         Debug.Log($"{playerName} apuesta {amount}. Total apostado: {currentBet}");
     }
 
     public void Fold()
     {
         isPlayerActive = false;
+        foldUIIcon.SetActive(true);
+        checkUIIcon.SetActive(false);
         Debug.Log($"{playerName} se retira de la mano.");
     }
 

@@ -48,8 +48,10 @@ public class TurnManager : MonoBehaviour
             foreach (Player player in players)
             {
                 player.ResetBet();
-                player.UpdateUICurrentBet();
+                player.UpdateTableUICurrentBet();
                 if (!player.isPlayerActive) player.isPlayerActive = true;
+                player.ResetStateIcons();
+                player.UpdateUIRole();
             }
             int bigBlindPlayerIndex = GetBigBlindPlayerIndex();
             int smallBlindPlayerIndex = GetSmallBlindPlayerIndex();
