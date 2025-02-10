@@ -51,7 +51,6 @@ public class TurnManager : MonoBehaviour
                 player.UpdateTableUICurrentBet();
                 if (!player.isPlayerActive) player.isPlayerActive = true;
                 player.ResetStateIcons();
-                player.UpdateUIRole();
             }
             int bigBlindPlayerIndex = GetBigBlindPlayerIndex();
             int smallBlindPlayerIndex = GetSmallBlindPlayerIndex();

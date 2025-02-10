@@ -111,38 +111,7 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Not enough cards in hand to update UI.");
         }
     }
-    public void UpdateUIRole()
-    {
-        if (dealerUIIcon != null && smallBlindUIIcon != null && bigBlindUIIcon != null) 
-        {
-            switch (role)
-            {
-                case "Dealer":
-                    dealerUIIcon.SetActive(true);
-                    smallBlindUIIcon.SetActive(false);
-                    bigBlindUIIcon.SetActive(false);
-                    break;
-
-                case "Small Blind":
-                    dealerUIIcon.SetActive(false);
-                    smallBlindUIIcon.SetActive(true);
-                    bigBlindUIIcon.SetActive(false);
-                    break;
-
-                case "Big Blind":
-                    dealerUIIcon.SetActive(false);
-                    smallBlindUIIcon.SetActive(false);
-                    bigBlindUIIcon.SetActive(true);
-                    break;
-                
-                default:
-                    dealerUIIcon.SetActive(false);
-                    smallBlindUIIcon.SetActive(false);
-                    bigBlindUIIcon.SetActive(false);
-                    break;
-            }           
-        }
-    }
+    
     public void ResetStateIcons()
     {
         checkUIIcon.SetActive(false);
@@ -154,6 +123,13 @@ public class Player : MonoBehaviour
         dealerTableUIIcon.SetActive(false);
         smallBlindTableUIIcon.SetActive(false);
         bigBlindTableUIIcon.SetActive(false);
+        if (isHuman)
+        {
+            dealerUIIcon.SetActive(false);
+            smallBlindUIIcon.SetActive(false);
+            bigBlindUIIcon.SetActive(false);
+        }
+        
     }
     public void SetRole(string newRole)
     {
@@ -164,24 +140,48 @@ public class Player : MonoBehaviour
                 dealerTableUIIcon.SetActive(true);
                 smallBlindTableUIIcon.SetActive(false);
                 bigBlindTableUIIcon.SetActive(false);
+                if (isHuman)
+                {
+                    dealerUIIcon.SetActive(true);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(false);
+                }
                 break;
 
             case "Small Blind":
                 dealerTableUIIcon.SetActive(false);
                 smallBlindTableUIIcon.SetActive(true);
                 bigBlindTableUIIcon.SetActive(false);
+                if (isHuman)
+                {
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(true);
+                    bigBlindUIIcon.SetActive(false);
+                }
                 break;
 
             case "Big Blind":
                 dealerTableUIIcon.SetActive(false);
                 smallBlindTableUIIcon.SetActive(false);
                 bigBlindTableUIIcon.SetActive(true);
+                if (isHuman)
+                {
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(true);
+                }
                 break;
 
             default:
                 dealerTableUIIcon.SetActive(false);
                 smallBlindTableUIIcon.SetActive(false);
                 bigBlindTableUIIcon.SetActive(false);
+                if (isHuman)
+                {
+                    dealerUIIcon.SetActive(false);
+                    smallBlindUIIcon.SetActive(false);
+                    bigBlindUIIcon.SetActive(false);
+                }
                 break;
         }
     }
