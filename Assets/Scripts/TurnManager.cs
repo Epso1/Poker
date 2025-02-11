@@ -64,7 +64,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();
+            currentPlayerIndex = GetFirstActivePlayerAfterDealerOrSmallBlind();
             StartPlayerTurn();
         }
     }
@@ -107,13 +107,19 @@ public class TurnManager : MonoBehaviour
 
         if (IsRoundComplete())
         {
-            Debug.Log("Ronda completa. Avanzando a la siguiente fase.");
-
-            foreach (var player in players)
+            if (players.Count(player => player.isPlayerActive) == 1)
             {
-                player.hasActed = false;
+                gameState = GameState.River;
+                Debug.Log("Ronda completa con un sólo jugador activo. Finalizando partida.");
             }
-
+            else
+            {
+                Debug.Log("Ronda completa. Avanzando a la siguiente fase.");
+                foreach (var player in players)
+                {
+                    player.hasActed = false;
+                }               
+            }
             ProceedToNextGameState();
         }
         else
@@ -124,9 +130,6 @@ public class TurnManager : MonoBehaviour
 
     private bool IsRoundComplete()
     {
-        // Si solo queda un jugador activo, la ronda termina
-        if (players.Count(player => player.isPlayerActive) == 1) return true;
-
         // Si todos los jugadores activos han igualado la apuesta más alta y han actuado, la ronda termina
         return players.All(player => !player.isPlayerActive || (player.hasActed && player.HasMatchedBet(currentBet)) );   
     }
@@ -177,6 +180,33 @@ public class TurnManager : MonoBehaviour
     {
         return players.FindIndex(player => player.GetRole() == "Small Blind");
     }
+
+    private int GetFirstActivePlayerAfterDealerOrSmallBlind()
+    {
+        List<Player> activePlayers = players.Where(player => player.isPlayerActive).ToList();
+
+        if (activePlayers.Count == 2)
+        {
+            // Si solo hay dos jugadores, el que era Small Blind empieza la ronda postflop
+            return players.FindIndex(player => player.GetRole() == "Small Blind");
+        }
+
+        int dealerIndex = players.FindIndex(player => player.GetRole() == "Dealer");
+
+        // Buscar el primer jugador activo a la izquierda del dealer
+        for (int i = 1; i < players.Count; i++)
+        {
+            int index = (dealerIndex + i) % players.Count;
+            if (players[index].isPlayerActive)
+            {
+                return index;
+            }
+        }
+
+        return dealerIndex; // Si por algún motivo no hay otro activo, devolver el dealer (evitar errores)
+    }
+
+
 
     private void DealFlopCards()
     {
