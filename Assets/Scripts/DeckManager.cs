@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
-    [SerializeField] public List<Player> players; // Lista de jugadores en la partida
+    [SerializeField] public List<PlayerController> players; // Lista de jugadores en la partida
     [SerializeField] List<GameObject> cardPrefabs; // Lista de prefabs de cartas
     [SerializeField] Transform deckSpawnPoint; // Punto donde aparecerá el mazo    
     [SerializeField] List<Transform> communityCardsPositions; // Lista de puntos donde aperecerán las cartas comunitarias
@@ -16,8 +16,8 @@ public class DeckManager : MonoBehaviour
     GameObject deckContainer; // Contenedor del mazo    
     List<Card> communityCards = new List<Card>(); // Lista de cartas comunitarias
     [SerializeField] Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
-    [SerializeField] Image[] cardUIImages;
-    [SerializeField] TextMeshProUGUI potText;
+    [SerializeField] Image[] cardUIImages; // Lista de UIImages donde se mostrarán las cartas comunitarias
+    [SerializeField] TextMeshProUGUI potText; // UIText que muestra el bote actual 
 
     // Clase que representa una carta
     public class Card
@@ -83,7 +83,7 @@ public class DeckManager : MonoBehaviour
     // Repartir las cartas iniciales
     public void DealInitialCards()
     {
-        foreach (Player player in players)
+        foreach (PlayerController player in players)
         {
             // Repartir la primera carta
             Card firstCard = DrawCard();
@@ -172,7 +172,7 @@ public class DeckManager : MonoBehaviour
         int smallBlindIndex = players.FindIndex(player => player.GetRole() == "Small Blind");
 
         // Resetear el rol en la IU para todos los jugadores
-        foreach (Player player in players) { player.ResetUIRole(); }
+        foreach (PlayerController player in players) { player.ResetUIRole(); }
 
         if (players.Count() >= 3)
         {      
@@ -323,15 +323,15 @@ public class DeckManager : MonoBehaviour
         return null;
     }
 
-    public Player EvaluateHands()
+    public (PlayerController, string) EvaluateHands()
     {
-        Player bestPlayer = null;
+        PlayerController bestPlayer = null;
         string bestHandDescription = null;
         List<Card> bestHandCards = null;
 
-        foreach (Player player in players)
+        foreach (PlayerController player in players)
         {
-            if (player.GetComponent<Player>().isPlayerActive)
+            if (player.GetComponent<PlayerController>().isPlayerActive)
             {
                 // Combinar cartas personales y comunitarias
                 List<Card> combinedCards = new List<Card>(player.hand);
@@ -378,7 +378,7 @@ public class DeckManager : MonoBehaviour
             Debug.Log($"Mejor mano: {bestHandDescription} de {bestPlayer.playerName}");
         }
 
-        return bestPlayer;
+        return (bestPlayer, bestHandDescription);
     }
 
 
@@ -386,18 +386,19 @@ public class DeckManager : MonoBehaviour
     {
         var sortedCards = cards.OrderByDescending(card => GetCardValue(card.rank)).ToList();
 
-        if (IsRoyalFlush(sortedCards)) return ("EscaleraReal", GetBestRoyalFlush(sortedCards));
-        if (IsStraightFlush(sortedCards)) return ($"EscaleradeColor al {GetBestStraightFlush(sortedCards)[0].rank}", GetBestStraightFlush(sortedCards));
-        if (IsFourOfAKind(sortedCards)) return ($"Poker de {GetBestFourOfAKind(sortedCards)[0].rank}", GetBestFourOfAKind(sortedCards));
-        if (IsFullHouse(sortedCards)) return ($"FullHouse con {GetBestFullHouse(sortedCards)[0].rank} y {GetBestFullHouse(sortedCards)[3].rank}", GetBestFullHouse(sortedCards));
-        if (IsFlush(sortedCards)) return ($"Color al {GetBestFlush(sortedCards)[0].rank}", GetBestFlush(sortedCards));
-        if (IsStraight(sortedCards)) return ($"Escalera al {GetBestStraight(sortedCards)[0].rank}", GetBestStraight(sortedCards));
-        if (IsThreeOfAKind(sortedCards)) return ($"Trio de {GetBestThreeOfAKind(sortedCards)[0].rank}", GetBestThreeOfAKind(sortedCards));
-        if (IsTwoPair(sortedCards)) return ($"DoblePareja de {GetBestTwoPair(sortedCards)[0].rank} y {GetBestTwoPair(sortedCards)[2].rank}", GetBestTwoPair(sortedCards));      
-        if (IsOnePair(sortedCards)) return ($"Pareja de {GetBestOnePair(sortedCards)[0].rank}", GetBestOnePair(sortedCards));
+        if (IsRoyalFlush(sortedCards)) return ("RoyalFlush", GetBestRoyalFlush(sortedCards));
+        if (IsStraightFlush(sortedCards)) return ($"StraightFlush to {GetBestStraightFlush(sortedCards)[0].rank}", GetBestStraightFlush(sortedCards));
+        if (IsFourOfAKind(sortedCards)) return ($"FourOfAKind of {GetBestFourOfAKind(sortedCards)[0].rank}", GetBestFourOfAKind(sortedCards));
+        if (IsFullHouse(sortedCards)) return ($"FullHouse with {GetBestFullHouse(sortedCards)[0].rank} and {GetBestFullHouse(sortedCards)[3].rank}", GetBestFullHouse(sortedCards));
+        if (IsFlush(sortedCards)) return ($"Flush to {GetBestFlush(sortedCards)[0].rank}", GetBestFlush(sortedCards));
+        if (IsStraight(sortedCards)) return ($"Straight to {GetBestStraight(sortedCards)[0].rank}", GetBestStraight(sortedCards));
+        if (IsThreeOfAKind(sortedCards)) return ($"ThreeOfAKind of {GetBestThreeOfAKind(sortedCards)[0].rank}", GetBestThreeOfAKind(sortedCards));
+        if (IsTwoPair(sortedCards)) return ($"TwoPair of {GetBestTwoPair(sortedCards)[0].rank} and {GetBestTwoPair(sortedCards)[2].rank}", GetBestTwoPair(sortedCards));
+        if (IsOnePair(sortedCards)) return ($"Pair of {GetBestOnePair(sortedCards)[0].rank}", GetBestOnePair(sortedCards));
 
-        return ($"CartaAlta {sortedCards[0].rank}", sortedCards);
+        return ($"HighCard {sortedCards[0].rank}", sortedCards);
     }
+
 
     private int CompareHands(List<Card> hand1, List<Card> hand2)
     {
@@ -408,16 +409,16 @@ public class DeckManager : MonoBehaviour
         // Crear un diccionario para jerarquizar las jugadas
         Dictionary<string, int> handRanks = new Dictionary<string, int>
         {
-            { "EscaleraReal", 10 },
-            { "EscaleradeColor", 9 },
-            { "Poker", 8 },
+            { "RoyalFlush", 10 },
+            { "StraightFlush", 9 },
+            { "FourOfAKind", 8 },
             { "FullHouse", 7 },
-            { "Color", 6 },
-            { "Escalera", 5 },
-            { "Trio", 4 },
-            { "DoblePareja", 3 },
-            { "Pareja", 2 },
-            { "CartaAlta", 1 }
+            { "Flush", 6 },
+            { "Straight", 5 },
+            { "ThreeOfAKind", 4 },
+            { "TwoPair", 3 },
+            { "Pair", 2 },
+            { "HighCard", 1 }
         };
 
         // Obtener el rango de las jugadas
@@ -666,7 +667,7 @@ public class DeckManager : MonoBehaviour
 
         communityCards.Clear();
 
-        foreach (Player player in players)
+        foreach (PlayerController player in players)
         {
             player.hand.Clear();
         }

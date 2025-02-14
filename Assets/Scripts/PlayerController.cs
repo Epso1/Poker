@@ -5,16 +5,29 @@ using UnityEngine.UI;
 using static DeckManager;
 
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] public string playerName;
+    [SerializeField] public int credit;
     [SerializeField] public Transform card1Position;
     [SerializeField] public Transform card2Position;
-    [SerializeField] TextMeshProUGUI playerNameText;
-    [SerializeField] public TextMeshProUGUI playerCreditText;
-    [SerializeField] Image card1Image;
-    [SerializeField] Image card2Image;
-    [SerializeField] public int credit;
+    public bool isHuman;
+    public string role;
+    public List<Card> hand = new List<Card>();
+    public int currentBet;
+    public bool hasActed = false;
+    public bool isPlayerActive = true;
+
+        // UI sólo para jugador Humano Activo
+        [SerializeField] TextMeshProUGUI playerNameText;
+        [SerializeField] public TextMeshProUGUI playerCreditText;
+        [SerializeField] Image card1Image;
+        [SerializeField] Image card2Image;
+        [SerializeField] GameObject dealerUIIcon;
+        [SerializeField] GameObject smallBlindUIIcon;
+        [SerializeField] GameObject bigBlindUIIcon;
+
+    // UI de mesa del jugador
     [SerializeField] GameObject dealerTableUIIcon;
     [SerializeField] GameObject smallBlindTableUIIcon;
     [SerializeField] GameObject bigBlindTableUIIcon;
@@ -22,17 +35,8 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentBetTableText;
     [SerializeField] GameObject checkUIIcon;
     [SerializeField] GameObject foldUIIcon;
-    [SerializeField] GameObject dealerUIIcon;
-    [SerializeField] GameObject smallBlindUIIcon;
-    [SerializeField] GameObject bigBlindUIIcon;
-
-    public bool isHuman;
-    public string role;
-    public List<Card> hand = new List<Card>();
+   
     DeckManager deckManager;
-    public int currentBet;
-    public bool hasActed = false;
-    public bool isPlayerActive = true;
     Color playerTurnImageInitialColor;
     private void Awake()
     {
