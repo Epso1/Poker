@@ -8,6 +8,7 @@ using static DeckManager;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] public string playerName;
+    [SerializeField] public string playerID;
     [SerializeField] public int credit;
     [SerializeField] public Transform card1Position;
     [SerializeField] public Transform card2Position;
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
         return string.Format("${0:N0}", value);
     }
 
-    void UpdatePlayerNameText()
+    public void UpdatePlayerNameText()
     {
         playerNameText.text = playerName;
     }

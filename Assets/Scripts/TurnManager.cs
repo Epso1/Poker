@@ -36,9 +36,21 @@ public class TurnManager : MonoBehaviour
         deckManager = FindObjectOfType<DeckManager>();
         players = deckManager.players;
         deckManager.StartNewHand();
+        AssignPlayersToSeats();
         StartBettingRound();
     }
+    void AssignPlayersToSeats()
+    {
+        List<PlayerData> playersData = DataManager.Instance.connectedPlayers;
 
+        for (int i = 0; i < playersData.Count; i++)
+        {
+            players[i].playerName = playersData[i].playerName;
+
+            // Actualizar la UI con el nombre del jugador
+            players[i].UpdatePlayerNameText();
+        }
+    }
     private void StartBettingRound()
     {
         

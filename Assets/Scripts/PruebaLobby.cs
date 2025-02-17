@@ -19,6 +19,7 @@ public class PruebaLobby : MonoBehaviour
     [SerializeField] private GameObject panelPlayer;
     [SerializeField] private TMP_Text idPlayer_text;
     [SerializeField] private TMP_Text nombrePlayer_text;
+    [SerializeField] private GameObject botonInicio;
 
     private Lobby hostLobby; //variable para guardar el lobby que crearemos (Solo el host tiene acceso a esta variable)
 
@@ -32,6 +33,8 @@ public class PruebaLobby : MonoBehaviour
     private async void Start() //usamos async para poder usar await
     {
         panelLobby.SetActive(false); //Inicializamos el panel de lobby
+        botonInicio.SetActive(false);
+
 
         InitializationOptions options = new InitializationOptions();
         nombrePlayer = "Player_" + Random.Range(10, 99);
@@ -44,6 +47,9 @@ public class PruebaLobby : MonoBehaviour
 
         AuthenticationService.Instance.SignedIn += () =>
         {
+            PlayerData newPlayerData = new PlayerData(nombrePlayer, AuthenticationService.Instance.PlayerId); // Creamos un PlayerData con los datos del jugador
+            DataManager.Instance.connectedPlayers.Add(newPlayerData); // Añadimos el jugador a la lista de jugadores conectados del DataManager
+
             Debug.Log("Se ha logeado el player nº: " + AuthenticationService.Instance.PlayerId); //Cada vez que se logee un usuario, se ejecutará este código
             idPlayer_text.text = "Player ID: " + AuthenticationService.Instance.PlayerId; //Mostramos el id del player en pantalla
         };
@@ -154,6 +160,7 @@ public class PruebaLobby : MonoBehaviour
             panelLobby.SetActive(true);
             // Mostramos los players actualizados
             MostrarPlayers();
+            
         }
         catch (LobbyServiceException e)
         {
@@ -183,6 +190,11 @@ public class PruebaLobby : MonoBehaviour
         bool soyHost = playerLobby.HostId == AuthenticationService.Instance.PlayerId; // Comprobamos si el player actual es el host (para mostrar o no el botón de baneo)
 
         Debug.Log("Players en el Lobby " + playerLobby.Name + " : " + playerLobby.Players.Count); // Número de players en el lobby
+
+        if (playerLobby.Players.Count >= maxJugadores && soyHost)
+        {
+            botonInicio.SetActive(true);
+        }
 
         foreach (Player p in playerLobby.Players) // Refrescamos la lista de players
         {
