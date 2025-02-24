@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3247407087084941169}
   - component: {fileID: 789797634634701755}
   - component: {fileID: 2104440389623269177}
+  - component: {fileID: -2117419672446245266}
   m_Layer: 0
   m_Name: Card_DiamondJack
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320136, y: 0.19488752, z: 0.001}
   m_Center: {x: 0.00000011920929, y: 0, z: 7.2027345e-15}
+--- !u!114 &-2117419672446245266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293958831448521326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

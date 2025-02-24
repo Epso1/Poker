@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4787171228445876901}
   - component: {fileID: 7317088905535968879}
   - component: {fileID: 8235412694305262313}
+  - component: {fileID: -6243110837175397402}
   m_Layer: 0
   m_Name: Card_Spade8
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1332013, y: 0.19488749, z: 0.001}
   m_Center: {x: 0.000000014901161, y: -4.440892e-16, z: -1.2130444e-16}
+--- !u!114 &-6243110837175397402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118515906719512506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

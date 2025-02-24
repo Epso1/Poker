@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System;
 
 public class PlayerSpawnHandler : NetworkBehaviour
 {
@@ -11,7 +12,16 @@ public class PlayerSpawnHandler : NetworkBehaviour
             transform.position = spawnPoint.position;
             transform.rotation = spawnPoint.rotation;
 
-            SpawnManager.Instance.PlayerSpawned(); // Notificar al SpawnManager
+            string uniqueName = GenerateUniqueName();
+            GetComponent<PlayerController>().SetPlayerName(uniqueName);
+
+            SpawnManager.Instance.PlayerSpawned();
         }
     }
+
+    private string GenerateUniqueName()
+    {
+        return $"Player-{Guid.NewGuid().ToString()}"; // Genera un GUID único
+    }
 }
+

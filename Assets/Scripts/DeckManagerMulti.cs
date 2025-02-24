@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class DeckManager : MonoBehaviour
+public class DeckManagerMulti : MonoBehaviour
 {
     [SerializeField] public List<PlayerController> players; // Lista de jugadores en la partida
     [SerializeField] List<GameObject> cardPrefabs; // Lista de prefabs de cartas
@@ -699,13 +699,5 @@ public class DeckManager : MonoBehaviour
 
 }
 
-// Clase que representa una carta
-public class Card
-{
-    public string suit; // Palo: Clubs, Diamonds, Hearts, Spades
-    public string rank; // Rango: 2, 3, ..., J, Q, K, Ace
-    public GameObject prefab; // Prefab asociado a la carta
-    public GameObject cardObject; // Instancia del prefab 
-}
 
 

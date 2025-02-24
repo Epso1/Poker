@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4941625649783997826}
   - component: {fileID: 7165465675631522120}
   - component: {fileID: 8408586300305174002}
+  - component: {fileID: -674506483591115300}
   m_Layer: 0
   m_Name: Card_ClubJack
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320138, y: 0.19488756, z: 0.001}
   m_Center: {x: 0.0000001192093, y: -8.881784e-16, z: -8.620119e-16}
+--- !u!114 &-674506483591115300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678477582111002781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

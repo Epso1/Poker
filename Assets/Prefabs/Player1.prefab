@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 597758172168867506}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -629,13 +629,6 @@ MonoBehaviour:
   currentBet: 0
   hasActed: 0
   isPlayerActive: 1
-  playerNameText: {fileID: 0}
-  playerCreditText: {fileID: 0}
-  card1Image: {fileID: 0}
-  card2Image: {fileID: 0}
-  dealerUIIcon: {fileID: 0}
-  smallBlindUIIcon: {fileID: 0}
-  bigBlindUIIcon: {fileID: 0}
   dealerTableUIIcon: {fileID: 7116598240122974220}
   smallBlindTableUIIcon: {fileID: 4714178023623559344}
   bigBlindTableUIIcon: {fileID: 5929632857812792148}
@@ -643,6 +636,12 @@ MonoBehaviour:
   currentBetTableText: {fileID: 1077500923265475427}
   checkUIIcon: {fileID: 1799621518518047353}
   foldUIIcon: {fileID: 3392270931060098714}
+  playerCreditText: {fileID: 0}
+  card1Image: {fileID: 0}
+  card2Image: {fileID: 0}
+  dealerUIIcon: {fileID: 0}
+  smallBlindUIIcon: {fileID: 0}
+  bigBlindUIIcon: {fileID: 0}
 --- !u!114 &5766728956806448574
 MonoBehaviour:
   m_ObjectHideFlags: 0

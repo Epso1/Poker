@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1045450398391498300}
   - component: {fileID: 2983310194273583862}
   - component: {fileID: 4514662299505008252}
+  - component: {fileID: 8881140197103341992}
   m_Layer: 0
   m_Name: Card_Club9
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320138, y: 0.19488761, z: 0.001}
   m_Center: {x: 0.00000011920929, y: -7.1054274e-15, z: -5.5444473e-15}
+--- !u!114 &8881140197103341992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631630423275414307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

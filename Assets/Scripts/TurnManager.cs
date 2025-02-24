@@ -42,6 +42,7 @@ public class TurnManager : MonoBehaviour
 
     public void InitializeGame()
     {
+        deckManager.AddPlayers();
         deckManager.StartNewHand();
         //AssignPlayersToSeats();
         StartBettingRound();

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5131108814099211660}
   - component: {fileID: 6976545375235772742}
   - component: {fileID: 8579426215254822340}
+  - component: {fileID: 8542841059689114387}
   m_Layer: 0
   m_Name: Card_SpadeJack
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320136, y: 0.19488749, z: 0.001}
   m_Center: {x: 0.00000011920929, y: -3.5527137e-15, z: -9.704355e-16}
+--- !u!114 &8542841059689114387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922008535558860947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

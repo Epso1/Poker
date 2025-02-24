@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4896630420940163460}
   - component: {fileID: 7210443483559132494}
   - component: {fileID: -6718962049940145176}
+  - component: {fileID: -24544987962229135}
   m_Layer: 0
   m_Name: Card_DiamondAce
   m_TagString: Card
@@ -105,3 +106,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13320124, y: 0.19488752, z: 0.001}
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
+--- !u!114 &-24544987962229135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9155915166557002907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
