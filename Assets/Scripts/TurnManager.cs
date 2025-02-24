@@ -35,8 +35,15 @@ public class TurnManager : MonoBehaviour
         nextRoundButton.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
         players = deckManager.players;
+        //deckManager.StartNewHand();
+        //AssignPlayersToSeats();
+        //StartBettingRound();
+    }
+
+    public void InitializeGame()
+    {
         deckManager.StartNewHand();
-        AssignPlayersToSeats();
+        //AssignPlayersToSeats();
         StartBettingRound();
     }
     void AssignPlayersToSeats()
