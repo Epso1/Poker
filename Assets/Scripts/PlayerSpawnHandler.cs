@@ -13,7 +13,7 @@ public class PlayerSpawnHandler : NetworkBehaviour
             transform.rotation = spawnPoint.rotation;
 
             string uniqueName = GenerateUniqueName();
-            GetComponent<PlayerController>().SetPlayerName(uniqueName);
+            GetComponent<PlayerControllerMulti>().SetPlayerName(uniqueName);
 
             SpawnManager.Instance.PlayerSpawned();
         }

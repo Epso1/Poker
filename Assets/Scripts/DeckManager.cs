@@ -16,32 +16,9 @@ public class DeckManager : MonoBehaviour
     GameObject deckContainer; // Contenedor del mazo    
     List<Card> communityCards = new List<Card>(); // Lista de cartas comunitarias
     [SerializeField] Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
-
-
     [SerializeField] Image[] cardUIImages; // Lista de UIImages donde se mostrarán las cartas comunitarias
     [SerializeField] TextMeshProUGUI potText; // UIText que muestra el bote actual 
-
-    // UI para jugador Humano Activo
-    [SerializeField] public TextMeshProUGUI playerNameText;
-    [SerializeField] public TextMeshProUGUI playerCreditText;
-    [SerializeField] public Image card1Image;
-    [SerializeField] public Image card2Image;
-    [SerializeField] public GameObject dealerUIIcon;
-    [SerializeField] public GameObject smallBlindUIIcon;
-    [SerializeField] public GameObject bigBlindUIIcon;
-
     [SerializeField] public GameObject betPanel;
-
-    
-
-    public void AddPlayers()
-    {
-        var playersGO = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var p in playersGO)
-        {
-            players.Add(p.GetComponent<PlayerController>());
-        }
-    }
 
     // Crear las cartas en memoria
     public void CreateDeck()
@@ -172,7 +149,7 @@ public class DeckManager : MonoBehaviour
             players[0].SetRole("Dealer");
             players[1].SetRole("Small Blind");
             players[2].SetRole("Big Blind");
-        } 
+        }
         else if (players.Count() == 2)
         {
             players[0].SetRole("Small Blind");
@@ -190,7 +167,7 @@ public class DeckManager : MonoBehaviour
         foreach (PlayerController player in players) { player.ResetUIRole(); }
 
         if (players.Count() >= 3)
-        {      
+        {
             // Calcular los índices para los nuevos roles
             int newBigBlindIndex = (bigBlindIndex + 1) % players.Count;
             int newSmallBlindIndex = (newBigBlindIndex - 1 + players.Count) % players.Count;
@@ -268,7 +245,7 @@ public class DeckManager : MonoBehaviour
         if (digitIndex == -1)
         {
             //Debug.Log("Suit: " + parts[1].Substring(0, GetSecondUppercasePosition(parts[1])) + " - Rank " + parts[1].Substring(GetSecondUppercasePosition(parts[1])));
-            return (parts[1].Substring(0, GetSecondUppercasePosition(parts[1])) , parts[1].Substring(GetSecondUppercasePosition(parts[1])));
+            return (parts[1].Substring(0, GetSecondUppercasePosition(parts[1])), parts[1].Substring(GetSecondUppercasePosition(parts[1])));
         }
         else
         {
@@ -298,7 +275,7 @@ public class DeckManager : MonoBehaviour
         }
 
         return secondUppercase; // Return -1 if the second uppercase letter wasn't found
-    }   
+    }
 
     // Actualizar las cartas que se muestran en la UI
     void UpdateUICommunityCards()
@@ -323,7 +300,7 @@ public class DeckManager : MonoBehaviour
     public void UpdateUIPot(int pot)
     {
         potText.text = "TOTAL POT: " + string.Format("${0:N0}", pot);
-    } 
+    }
 
     // Método auxiliar para encontrar un sprite por nombre
     public Sprite FindSpriteByName(string name)
@@ -384,7 +361,7 @@ public class DeckManager : MonoBehaviour
                 // Mostrar la jugada del jugador
                 Debug.Log($"Jugador {player.playerName} está inactivo.");
             }
-           
+
         }
 
         // Mostrar al ganador
@@ -655,7 +632,7 @@ public class DeckManager : MonoBehaviour
 
         var pair = groups.First().Take(2).ToList();
         var kickers = cards.Except(pair).OrderByDescending(card => GetCardValue(card.rank)).Take(3);
-        var bestPair = pair.Concat(kickers).ToList(); 
+        var bestPair = pair.Concat(kickers).ToList();
 
         return pair.Concat(kickers).ToList();
     }
@@ -698,6 +675,7 @@ public class DeckManager : MonoBehaviour
     }
 
 }
+
 
 // Clase que representa una carta
 public class Card

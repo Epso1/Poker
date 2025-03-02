@@ -2,10 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Netcode;
+using Unity.Collections;
 
-public class PlayerController : MonoBehaviour
+
+
+public class PlayerControllerMulti : NetworkBehaviour
 {
     [SerializeField] public string playerName;
+    private readonly NetworkVariable<FixedString64Bytes> networkPlayerName = new NetworkVariable<FixedString64Bytes>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] public string playerID;
     [SerializeField] public int credit;
     [SerializeField] public Transform card1Position;
@@ -27,16 +32,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject foldUIIcon;
 
     // UI para jugador Humano Activo
-    [SerializeField]TextMeshProUGUI playerNameText;
-    [SerializeField] public TextMeshProUGUI playerCreditText;
+    TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI playerCreditText;
     [SerializeField] Image card1Image;
     [SerializeField] Image card2Image;
     [SerializeField] GameObject dealerUIIcon;
     [SerializeField] GameObject smallBlindUIIcon;
     [SerializeField] GameObject bigBlindUIIcon;
 
-    DeckManager deckManager;
-    Color playerTurnImageInitialColor;
+    DeckManagerMulti deckManager;
+    Color playerTurnImageInitialColor;   
 
     private void Awake()
     {
@@ -46,11 +51,19 @@ public class PlayerController : MonoBehaviour
         bigBlindTableUIIcon.SetActive(false);
         checkUIIcon.SetActive(false);
         foldUIIcon.SetActive(false);
-        deckManager = FindObjectOfType<DeckManager>();
+        deckManager = FindObjectOfType<DeckManagerMulti>();
 
     }
     private void Start()
     {
+        playerNameText = deckManager.playerNameText;
+        playerCreditText = deckManager.playerCreditText;
+        card1Image = deckManager.card1Image;
+        card2Image = deckManager.card2Image;
+        dealerUIIcon = deckManager.dealerUIIcon;
+        smallBlindUIIcon = deckManager.smallBlindUIIcon;
+        bigBlindUIIcon = deckManager.bigBlindUIIcon;
+
         if (playerNameText != null)
         {
             UpdatePlayerNameText();
@@ -61,9 +74,47 @@ public class PlayerController : MonoBehaviour
             UpdateCreditText();
         }
     }
-      
 
-   
+    public override void OnNetworkSpawn()
+    {
+        if (IsClient)
+        {
+            // Suscribirse a cambios en el nombre
+            networkPlayerName.OnValueChanged += OnPlayerNameChanged;
+
+            // Establecer el nombre inicial
+            playerName = networkPlayerName.Value.ToString();
+            UpdatePlayerNameText();
+        }
+    }
+
+    // Se ejecuta cuando cambia el nombre del jugador
+    private void OnPlayerNameChanged(FixedString64Bytes oldName, FixedString64Bytes newName)
+    {
+        playerName = newName.ToString();
+        UpdatePlayerNameText();
+    }
+
+    // Llamado para establecer el nombre del jugador
+    public void SetPlayerName(string name)
+    {
+        if (IsServer)
+        {
+            networkPlayerName.Value = name; // El servidor establece el nombre directamente
+        }
+        else
+        {
+            SetPlayerNameServerRpc(name); // Los clientes piden al servidor que lo haga
+        }
+    }
+
+    [ServerRpc]
+    private void SetPlayerNameServerRpc(string name)
+    {
+        networkPlayerName.Value = name;
+    }  
+
+
     public string FormatCurrency(int value)
     {
         return string.Format("${0:N0}", value);
@@ -72,6 +123,8 @@ public class PlayerController : MonoBehaviour
     // Actualiza el texto del nombre en la UI
     public void UpdatePlayerNameText()
     {
+        if (!IsOwner) return; // Solo el jugador dueño de este objeto actualiza su UI local
+
         if (playerNameText != null)
         {
             playerNameText.text = playerName;
@@ -85,11 +138,17 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateCreditText()
     {
+        if (!IsOwner) return; // Solo el dueño del objeto actualiza su UI local
+
         if (playerCreditText != null)
         {
             playerCreditText.text = FormatCurrency(credit);
+            Debug.Log($"Crédito actualizado para el jugador local: {credit}");
         }
-        
+        else
+        {
+            Debug.LogWarning("¡playerCreditText no está asignado en este cliente!");
+        }
     }
 
     public void UpdateTableUICurrentBet()
@@ -131,7 +190,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Not enough cards in hand to update UI.");
         }
     }
-
+    
     public void ResetStateIcons()
     {
         checkUIIcon.SetActive(false);
@@ -149,7 +208,7 @@ public class PlayerController : MonoBehaviour
             smallBlindUIIcon.SetActive(false);
             bigBlindUIIcon.SetActive(false);
         }
-
+        
     }
     public void SetRole(string newRole)
     {
@@ -205,7 +264,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
+    
     public string GetRole()
     {
         return role;
@@ -215,7 +274,7 @@ public class PlayerController : MonoBehaviour
     public void StartTurn(int currentBet, int pot)
     {
         // Mostrar UI para que el jugador elija una acción
-        deckManager.betPanel.SetActive(true);
+        //GameObject.FindWithTag("BetWindow").SetActive(true);
         playerTurnImage.color = playerTurnImageInitialColor;
         Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse. El bote es de : ${pot}.");
     }

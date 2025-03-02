@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class DeckManagerMulti : MonoBehaviour
 {
-    [SerializeField] public List<PlayerController> players; // Lista de jugadores en la partida
+    [SerializeField] public List<PlayerControllerMulti> players; // Lista de jugadores en la partida
     [SerializeField] List<GameObject> cardPrefabs; // Lista de prefabs de cartas
     [SerializeField] Transform deckSpawnPoint; // Punto donde aparecerá el mazo    
     [SerializeField] List<Transform> communityCardsPositions; // Lista de puntos donde aperecerán las cartas comunitarias
@@ -39,7 +39,7 @@ public class DeckManagerMulti : MonoBehaviour
         var playersGO = GameObject.FindGameObjectsWithTag("Player");
         foreach (var p in playersGO)
         {
-            players.Add(p.GetComponent<PlayerController>());
+            players.Add(p.GetComponent<PlayerControllerMulti>());
         }
     }
 
@@ -98,7 +98,7 @@ public class DeckManagerMulti : MonoBehaviour
     // Repartir las cartas iniciales
     public void DealInitialCards()
     {
-        foreach (PlayerController player in players)
+        foreach (PlayerControllerMulti player in players)
         {
             // Repartir la primera carta
             Card firstCard = DrawCard();
@@ -187,7 +187,7 @@ public class DeckManagerMulti : MonoBehaviour
         int smallBlindIndex = players.FindIndex(player => player.GetRole() == "Small Blind");
 
         // Resetear el rol en la IU para todos los jugadores
-        foreach (PlayerController player in players) { player.ResetUIRole(); }
+        foreach (PlayerControllerMulti player in players) { player.ResetUIRole(); }
 
         if (players.Count() >= 3)
         {      
@@ -338,15 +338,15 @@ public class DeckManagerMulti : MonoBehaviour
         return null;
     }
 
-    public (PlayerController, string) EvaluateHands()
+    public (PlayerControllerMulti, string) EvaluateHands()
     {
-        PlayerController bestPlayer = null;
+        PlayerControllerMulti bestPlayer = null;
         string bestHandDescription = null;
         List<Card> bestHandCards = null;
 
-        foreach (PlayerController player in players)
+        foreach (PlayerControllerMulti player in players)
         {
-            if (player.GetComponent<PlayerController>().isPlayerActive)
+            if (player.GetComponent<PlayerControllerMulti>().isPlayerActive)
             {
                 // Combinar cartas personales y comunitarias
                 List<Card> combinedCards = new List<Card>(player.hand);
@@ -682,7 +682,7 @@ public class DeckManagerMulti : MonoBehaviour
 
         communityCards.Clear();
 
-        foreach (PlayerController player in players)
+        foreach (PlayerControllerMulti player in players)
         {
             player.hand.Clear();
         }

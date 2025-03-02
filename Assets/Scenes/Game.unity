@@ -858,7 +858,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: PlayerFold
         m_Mode: 1
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 120694971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26566eefdea45ef40bcffa258f20293c, type: 3}
+  m_Script: {fileID: 11500000, guid: 242102b1a76b12a45a42d07b830bfc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player3
@@ -1160,13 +1160,6 @@ MonoBehaviour:
   currentBet: 0
   hasActed: 0
   isPlayerActive: 1
-  playerNameText: {fileID: 0}
-  playerCreditText: {fileID: 0}
-  card1Image: {fileID: 0}
-  card2Image: {fileID: 0}
-  dealerUIIcon: {fileID: 0}
-  smallBlindUIIcon: {fileID: 0}
-  bigBlindUIIcon: {fileID: 0}
   dealerTableUIIcon: {fileID: 420035470}
   smallBlindTableUIIcon: {fileID: 1414863278}
   bigBlindTableUIIcon: {fileID: 600990427}
@@ -1174,6 +1167,13 @@ MonoBehaviour:
   currentBetTableText: {fileID: 1252466450}
   checkUIIcon: {fileID: 273595416}
   foldUIIcon: {fileID: 273595414}
+  playerNameText: {fileID: 0}
+  playerCreditText: {fileID: 0}
+  card1Image: {fileID: 0}
+  card2Image: {fileID: 0}
+  dealerUIIcon: {fileID: 0}
+  smallBlindUIIcon: {fileID: 0}
+  bigBlindUIIcon: {fileID: 0}
 --- !u!1 &122250898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: PlayerRaise
         m_Mode: 1
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: PlayerCall
         m_Mode: 1
@@ -1720,6 +1720,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1163486829}
     m_Modifications:
+    - target: {fileID: -2361875406940676754, guid: 2e066fc53b63ad44b9302361f245771e, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 84630182
+      objectReference: {fileID: 0}
     - target: {fileID: 7100691155950504925, guid: 2e066fc53b63ad44b9302361f245771e, type: 3}
       propertyPath: m_LocalScale.x
       value: 15
@@ -2446,10 +2450,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players:
-  - {fileID: 532669172}
-  - {fileID: 694055585}
-  - {fileID: 120694973}
-  - {fileID: 569762021}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cardPrefabs:
   - {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
   - {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
@@ -2570,6 +2574,7 @@ MonoBehaviour:
   - {fileID: 1028965544}
   - {fileID: 1188246657}
   potText: {fileID: 1605273380}
+  betPanel: {fileID: 1976191161}
 --- !u!4 &449744835
 Transform:
   m_ObjectHideFlags: 0
@@ -2788,7 +2793,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 532669169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26566eefdea45ef40bcffa258f20293c, type: 3}
+  m_Script: {fileID: 11500000, guid: 242102b1a76b12a45a42d07b830bfc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player1
@@ -2801,13 +2806,6 @@ MonoBehaviour:
   currentBet: 0
   hasActed: 0
   isPlayerActive: 1
-  playerNameText: {fileID: 993896328}
-  playerCreditText: {fileID: 385925239}
-  card1Image: {fileID: 1087605842}
-  card2Image: {fileID: 2114356059}
-  dealerUIIcon: {fileID: 2129892733}
-  smallBlindUIIcon: {fileID: 332862470}
-  bigBlindUIIcon: {fileID: 617295911}
   dealerTableUIIcon: {fileID: 688307391}
   smallBlindTableUIIcon: {fileID: 662667534}
   bigBlindTableUIIcon: {fileID: 1344845567}
@@ -2815,6 +2813,13 @@ MonoBehaviour:
   currentBetTableText: {fileID: 1102853432}
   checkUIIcon: {fileID: 1981307018}
   foldUIIcon: {fileID: 1981307016}
+  playerNameText: {fileID: 993896328}
+  playerCreditText: {fileID: 385925239}
+  card1Image: {fileID: 1087605842}
+  card2Image: {fileID: 2114356059}
+  dealerUIIcon: {fileID: 2129892733}
+  smallBlindUIIcon: {fileID: 332862470}
+  bigBlindUIIcon: {fileID: 617295911}
 --- !u!1001 &536486444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3081,12 +3086,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 569762019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26566eefdea45ef40bcffa258f20293c, type: 3}
+  m_Script: {fileID: 11500000, guid: 242102b1a76b12a45a42d07b830bfc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player4
   playerID: 
-  credit: 2000
+  credit: 0
   card1Position: {fileID: 209955113}
   card2Position: {fileID: 1609185700}
   isHuman: 0
@@ -3094,13 +3099,6 @@ MonoBehaviour:
   currentBet: 0
   hasActed: 0
   isPlayerActive: 1
-  playerNameText: {fileID: 0}
-  playerCreditText: {fileID: 0}
-  card1Image: {fileID: 0}
-  card2Image: {fileID: 0}
-  dealerUIIcon: {fileID: 0}
-  smallBlindUIIcon: {fileID: 0}
-  bigBlindUIIcon: {fileID: 0}
   dealerTableUIIcon: {fileID: 1791865643}
   smallBlindTableUIIcon: {fileID: 1363827192}
   bigBlindTableUIIcon: {fileID: 1525431835}
@@ -3108,6 +3106,13 @@ MonoBehaviour:
   currentBetTableText: {fileID: 18978340}
   checkUIIcon: {fileID: 536486447}
   foldUIIcon: {fileID: 536486445}
+  playerNameText: {fileID: 0}
+  playerCreditText: {fileID: 0}
+  card1Image: {fileID: 0}
+  card2Image: {fileID: 0}
+  dealerUIIcon: {fileID: 0}
+  smallBlindUIIcon: {fileID: 0}
+  bigBlindUIIcon: {fileID: 0}
 --- !u!1 &600990427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2577203903741079836, guid: 3b23a3ad4ace43640aa02df91bb30c4f, type: 3}
@@ -4152,7 +4157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 694055583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26566eefdea45ef40bcffa258f20293c, type: 3}
+  m_Script: {fileID: 11500000, guid: 242102b1a76b12a45a42d07b830bfc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player2
@@ -4165,13 +4170,6 @@ MonoBehaviour:
   currentBet: 0
   hasActed: 0
   isPlayerActive: 1
-  playerNameText: {fileID: 0}
-  playerCreditText: {fileID: 0}
-  card1Image: {fileID: 0}
-  card2Image: {fileID: 0}
-  dealerUIIcon: {fileID: 0}
-  smallBlindUIIcon: {fileID: 0}
-  bigBlindUIIcon: {fileID: 0}
   dealerTableUIIcon: {fileID: 369995752}
   smallBlindTableUIIcon: {fileID: 1822379012}
   bigBlindTableUIIcon: {fileID: 1950230788}
@@ -4179,6 +4177,13 @@ MonoBehaviour:
   currentBetTableText: {fileID: 100601232}
   checkUIIcon: {fileID: 1807329785}
   foldUIIcon: {fileID: 1807329783}
+  playerNameText: {fileID: 0}
+  playerCreditText: {fileID: 0}
+  card1Image: {fileID: 0}
+  card2Image: {fileID: 0}
+  dealerUIIcon: {fileID: 0}
+  smallBlindUIIcon: {fileID: 0}
+  bigBlindUIIcon: {fileID: 0}
 --- !u!1001 &703608197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5220,7 +5225,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 892349123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae2f98c5f1e093046a8769aa825bd5d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cae22a1a18a03d4cb654d347c905a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pot: 0
@@ -5480,6 +5485,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1163486829}
     m_Modifications:
+    - target: {fileID: -1228559696734345515, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 566820115
+      objectReference: {fileID: 0}
     - target: {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
       propertyPath: m_Name
       value: Card_Club2
@@ -7617,7 +7626,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: RaiseTextSubtract20
         m_Mode: 1
@@ -7675,6 +7684,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1163486829}
     m_Modifications:
+    - target: {fileID: 4039131949603891577, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2203279841
+      objectReference: {fileID: 0}
     - target: {fileID: 6290163690470343772, guid: 276a581c69768684e8a0fef01f93077a, type: 3}
       propertyPath: m_Name
       value: Card_Diamond3
@@ -8754,7 +8767,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: ToNextRound
         m_Mode: 1
@@ -9129,63 +9142,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450962678}
   m_CullTransparentMesh: 1
---- !u!1001 &1469046501
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755097507858535853, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8555143706365568687, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
-      propertyPath: m_Name
-      value: SceneController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9562a226f138ac748b383cb05a01c104, type: 3}
 --- !u!1 &1482265679
 GameObject:
   m_ObjectHideFlags: 0
@@ -10004,63 +9960,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605273378}
   m_CullTransparentMesh: 1
---- !u!1001 &1606076503
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108317294502634418, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6508857603325914707, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
-      propertyPath: m_Name
-      value: DataManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6533cca25c7d0bd45918131b68932fec, type: 3}
 --- !u!4 &1609185700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 60171479546272119, guid: 6f868b54e7eb32946a7ffa4566c51970, type: 3}
@@ -11585,7 +11484,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892349125}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: RaiseTextAdd20
         m_Mode: 1
@@ -13106,5 +13005,3 @@ SceneRoots:
   - {fileID: 870319994}
   - {fileID: 449744835}
   - {fileID: 892349124}
-  - {fileID: 1606076503}
-  - {fileID: 1469046501}

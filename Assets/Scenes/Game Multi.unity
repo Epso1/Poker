@@ -1118,7 +1118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20.3, y: 120}
+  m_AnchoredPosition: {x: 20.300049, y: 120}
   m_SizeDelta: {x: 240, y: 280}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &241008023
@@ -1807,15 +1807,15 @@ MonoBehaviour:
   communityCardsPositions: []
   cardSprites: []
   cardUIImages: []
-  potText: {fileID: 0}
-  playerNameText: {fileID: 0}
-  playerCreditText: {fileID: 0}
-  card1Image: {fileID: 0}
-  card2Image: {fileID: 0}
-  dealerUIIcon: {fileID: 0}
-  smallBlindUIIcon: {fileID: 0}
-  bigBlindUIIcon: {fileID: 0}
-  betPanel: {fileID: 0}
+  potText: {fileID: 1605273380}
+  playerNameText: {fileID: 993896328}
+  playerCreditText: {fileID: 385925239}
+  card1Image: {fileID: 1087605842}
+  card2Image: {fileID: 2114356059}
+  dealerUIIcon: {fileID: 2129892733}
+  smallBlindUIIcon: {fileID: 332862470}
+  bigBlindUIIcon: {fileID: 617295911}
+  betPanel: {fileID: 1976191161}
 --- !u!1 &494605687
 GameObject:
   m_ObjectHideFlags: 0

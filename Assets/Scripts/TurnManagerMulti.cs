@@ -4,16 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum GameState
-{
-    PreFlop,
-    Flop,
-    Turn,
-    River,
-    Showdown
-}
 
-public class TurnManager : MonoBehaviour
+public class TurnManagerMulti : MonoBehaviour
 {
     private int currentPlayerIndex = 0;
     private GameState gameState = GameState.PreFlop;
@@ -27,26 +19,46 @@ public class TurnManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI raiseButtonText;
     [SerializeField] TextMeshProUGUI gameInfoText;
     [SerializeField] GameObject nextRoundButton;
-    List<PlayerController> players = new List<PlayerController>();
-    DeckManager deckManager;
+    List<PlayerControllerMulti> players = new List<PlayerControllerMulti>();
+    DeckManagerMulti deckManager;
     private void Start()
     {
         gameInfoText.text = "";
         nextRoundButton.SetActive(false);
-        deckManager = FindObjectOfType<DeckManager>();
+        deckManager = FindObjectOfType<DeckManagerMulti>();
         players = deckManager.players;
-        deckManager.StartNewHand();
-        StartBettingRound();
+        //deckManager.StartNewHand();
+        //AssignPlayersToSeats();
+        //StartBettingRound();
     }
 
+    public void InitializeGame()
+    {
+        deckManager.AddPlayers();
+        deckManager.StartNewHand();
+        //AssignPlayersToSeats();
+        StartBettingRound();
+    }
+    void AssignPlayersToSeats()
+    {
+        List<PlayerData> playersData = DataManager.Instance.connectedPlayers;
+
+        for (int i = 0; i < playersData.Count; i++)
+        {
+            players[i].playerName = playersData[i].playerName;
+
+            // Actualizar la UI con el nombre del jugador
+            players[i].UpdatePlayerNameText();
+        }
+    }
     private void StartBettingRound()
     {
-
+        
         if (gameState == GameState.PreFlop)
         {
             pot = 0;
             deckManager.UpdateUIPot(pot);
-            foreach (PlayerController player in players)
+            foreach (PlayerControllerMulti player in players)
             {
                 player.ResetBet();
                 player.UpdateTableUICurrentBet();
@@ -59,8 +71,8 @@ public class TurnManager : MonoBehaviour
             players[bigBlindPlayerIndex].Bet(bigBlindAmount);
             pot += smallBlindAmount + bigBlindAmount;
             deckManager.UpdateUIPot(pot);
-            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();
-            currentBet = bigBlindAmount;
+            currentPlayerIndex = (GetBigBlindPlayerIndex() + 1) % players.Count();           
+            currentBet = bigBlindAmount;            
             StartPlayerTurn();
         }
         else
@@ -91,7 +103,7 @@ public class TurnManager : MonoBehaviour
                 raiseButtonText.text = "RAISE";
                 callText.text = "$" + callAmount.ToString();
             }
-            foreach (PlayerController player in players)
+            foreach (PlayerControllerMulti player in players)
             {
                 Color alphaColor = new Color(0, 0, 0, 0);
                 player.playerTurnImage.color = alphaColor;
@@ -121,7 +133,7 @@ public class TurnManager : MonoBehaviour
                 foreach (var player in players)
                 {
                     player.hasActed = false;
-                }
+                }               
             }
             ProceedToNextGameState();
         }
@@ -134,7 +146,7 @@ public class TurnManager : MonoBehaviour
     private bool IsRoundComplete()
     {
         // Si todos los jugadores activos han igualado la apuesta más alta y han actuado, la ronda termina
-        return players.All(player => !player.isPlayerActive || (player.hasActed && player.HasMatchedBet(currentBet)));
+        return players.All(player => !player.isPlayerActive || (player.hasActed && player.HasMatchedBet(currentBet)) );   
     }
 
     private void ProceedToNextGameState()
@@ -167,8 +179,8 @@ public class TurnManager : MonoBehaviour
                 deckManager.ResetDeck();
                 StartBettingRound();
                 break;
-        }
-    }
+        }       
+    }    
 
     private int GetBigBlindPlayerIndex()
     {
@@ -181,7 +193,7 @@ public class TurnManager : MonoBehaviour
 
     private int GetFirstActivePlayerAfterDealerOrSmallBlind()
     {
-        List<PlayerController> activePlayers = players.Where(player => player.isPlayerActive).ToList();
+        List<PlayerControllerMulti> activePlayers = players.Where(player => player.isPlayerActive).ToList();
 
         if (activePlayers.Count == 2)
         {
@@ -230,7 +242,7 @@ public class TurnManager : MonoBehaviour
         var (winner, bestHand) = deckManager.EvaluateHands();
         gameInfoText.text = $"{winner.playerName} wins the hand \nwith {bestHand}\nand takes a pot of {FormatCurrency(pot)}";
         Debug.Log($"{winner.playerName} gana la mano \ncon {bestHand}\ny se lleva un bote de ${FormatCurrency(pot)}.");
-        foreach (PlayerController player in players)
+        foreach(PlayerControllerMulti player in players)
         {
             if (player == winner)
             {
@@ -247,7 +259,7 @@ public class TurnManager : MonoBehaviour
 
     public void PlayerCall()
     {
-        PlayerController currentPlayer = players[currentPlayerIndex];
+        PlayerControllerMulti currentPlayer = players[currentPlayerIndex];
 
         int callAmount = currentBet - currentPlayer.currentBet;
         currentPlayer.Bet(callAmount);
@@ -261,8 +273,8 @@ public class TurnManager : MonoBehaviour
 
     public void RaiseTextAdd20()
     {
-        string textToParse = raiseText.text.Remove(0, 1);
-        int initialValue = int.Parse(textToParse);
+        string textToParse = raiseText.text.Remove(0 ,1); 
+        int initialValue = int.Parse(textToParse);        
         int newValue = initialValue + 20;
         raiseText.text = "$" + newValue.ToString();
     }
@@ -277,12 +289,12 @@ public class TurnManager : MonoBehaviour
             raiseText.text = "$" + newValue.ToString();
         }
         else { raiseText.text = "$20"; }
-
+        
     }
 
     public void PlayerRaise()
     {
-        PlayerController currentPlayer = players[currentPlayerIndex];
+        PlayerControllerMulti currentPlayer = players[currentPlayerIndex];
         string textToParse = raiseText.text.Remove(0, 1);
         int amount = int.Parse(textToParse);
         int callAmount = currentBet - currentPlayer.currentBet;
@@ -295,10 +307,10 @@ public class TurnManager : MonoBehaviour
         //GameObject.FindWithTag("BetWindow").SetActive(false);
         currentPlayer.GetComponent<PlayerControllerMulti>().hasActed = true;
         AdvanceToNextPlayer();
-    }
+    } 
     public void PlayerFold()
     {
-        PlayerController currentPlayer = players[currentPlayerIndex];
+        PlayerControllerMulti currentPlayer = players[currentPlayerIndex];
         currentPlayer.GetComponent<PlayerControllerMulti>().Fold();
         currentPlayer.GetComponent<PlayerControllerMulti>().hasActed = true;
         AdvanceToNextPlayer();
