@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using static DeckManager;
+using Unity.Services.Lobbies.Models;
 
 
 public class PlayerController : MonoBehaviour
@@ -19,14 +20,15 @@ public class PlayerController : MonoBehaviour
     public bool hasActed = false;
     public bool isPlayerActive = true;
 
-        // UI sólo para jugador Humano Activo
-        [SerializeField] TextMeshProUGUI playerNameText;
-        [SerializeField] public TextMeshProUGUI playerCreditText;
-        [SerializeField] Image card1Image;
-        [SerializeField] Image card2Image;
-        [SerializeField] GameObject dealerUIIcon;
-        [SerializeField] GameObject smallBlindUIIcon;
-        [SerializeField] GameObject bigBlindUIIcon;
+    // UI sólo para jugador Humano Activo
+    [SerializeField] TextMeshProUGUI playerNameText;
+    [SerializeField] public TextMeshProUGUI playerCreditText;
+    [SerializeField] Image card1Image;
+    [SerializeField] Image card2Image;
+    [SerializeField] GameObject dealerUIIcon;
+    [SerializeField] GameObject smallBlindUIIcon;
+    [SerializeField] GameObject bigBlindUIIcon;
+    [SerializeField] public GameObject betWindow;
 
     // UI de mesa del jugador
     [SerializeField] GameObject dealerTableUIIcon;
@@ -36,7 +38,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentBetTableText;
     [SerializeField] GameObject checkUIIcon;
     [SerializeField] GameObject foldUIIcon;
-   
+
+    TurnManager turnManager;
     DeckManager deckManager;
     Color playerTurnImageInitialColor;
     private void Awake()
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
         checkUIIcon.SetActive(false);
         foldUIIcon.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
+        turnManager = FindObjectOfType<TurnManager>();
     }
     private void Start()
     {
@@ -196,14 +200,70 @@ public class PlayerController : MonoBehaviour
         return role;
     }
 
-
     public void StartTurn(int currentBet, int pot)
     {
         // Mostrar UI para que el jugador elija una acción
-        //GameObject.FindWithTag("BetWindow").SetActive(true);
+        if (isHuman) { betWindow.SetActive(true); }
+        else { betWindow.SetActive(false); SimulateAITurn(currentBet, pot); }       
         playerTurnImage.color = playerTurnImageInitialColor;
         Debug.Log($"{playerName} puede igualar {currentBet}, aumentar o retirarse. El bote es de : ${pot}.");
     }
+
+    private void SimulateAITurn(int currentBet, int pot)
+    {
+        int callAmount = currentBet - this.currentBet;
+
+        // Combinar cartas personales y comunitarias
+        List<Card> combinedCards = new List<Card>(hand);
+        if (deckManager.communityCards != null) combinedCards.AddRange(deckManager.communityCards);
+
+        // Evaluar la fuerza de la mano
+        int handStrength = EvaluateHandStrength(combinedCards);
+
+        if (handStrength == 2 || callAmount < credit / 50)
+        {
+            FindObjectOfType<TurnManager>().PlayerCall();
+        }
+        else if (handStrength > 2 && callAmount < credit / 5)
+        {
+            int raiseAmount = IADetermineRaiseAmount(handStrength, pot, credit);
+            turnManager.IARaise(raiseAmount);
+        }
+        else
+        {
+            FindObjectOfType<TurnManager>().PlayerFold();
+        }
+    }
+
+    private int IADetermineRaiseAmount(int handStrength, int pot, int credit)
+    {
+        float aggressionFactor = handStrength / 10f; // Cuanto más fuerte la mano, más agresiva la IA
+        int maxRaise = Mathf.Min(pot / 2, credit / 4); // No arriesga más de la mitad del bote o un cuarto de su stack
+        int minRaise = Mathf.Max(pot / 10, credit / 20); // Apuesta al menos una décima parte del bote o 5% de su stack
+
+        return Mathf.Clamp((int)(minRaise + aggressionFactor * (maxRaise - minRaise)), minRaise, maxRaise);
+    }
+
+
+    int EvaluateHandStrength(List<Card> hand)
+    {
+        var (description, bestHand) = deckManager.DetermineBestHand(hand);
+
+        switch (description)
+        {
+            case "RoyalFlush": return 10;
+            case var s when s.Contains("StraightFlush"): return 9;
+            case var s when s.Contains("FourOfAKind"): return 8;
+            case var s when s.Contains("FullHouse"): return 7;
+            case var s when s.Contains("Flush"): return 6;
+            case var s when s.Contains("Straight"): return 5;
+            case var s when s.Contains("ThreeOfAKind"): return 4;
+            case var s when s.Contains("TwoPair"): return 3;
+            case var s when s.Contains("Pair"): return 2;
+            default: return 1;
+        }
+    }
+
 
     public void Bet(int amount)
     {

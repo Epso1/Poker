@@ -14,7 +14,7 @@ public class DeckManager : MonoBehaviour
     [SerializeField] List<Transform> communityCardsPositions; // Lista de puntos donde aperecerán las cartas comunitarias
     List<Card> deck = new List<Card>(); // Lista de cartas en el mazo
     GameObject deckContainer; // Contenedor del mazo    
-    List<Card> communityCards = new List<Card>(); // Lista de cartas comunitarias
+    public List<Card> communityCards = new List<Card>(); // Lista de cartas comunitarias
     [SerializeField] Sprite[] cardSprites; // Lista de Sprites de las cartas en miniatura
     [SerializeField] Image[] cardUIImages; // Lista de UIImages donde se mostrarán las cartas comunitarias
     [SerializeField] TextMeshProUGUI potText; // UIText que muestra el bote actual 
@@ -382,7 +382,7 @@ public class DeckManager : MonoBehaviour
     }
 
 
-    private (string description, List<Card> bestHand) DetermineBestHand(List<Card> cards)
+    public (string description, List<Card> bestHand) DetermineBestHand(List<Card> cards)
     {
         var sortedCards = cards.OrderByDescending(card => GetCardValue(card.rank)).ToList();
 

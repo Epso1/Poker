@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using System.Reflection;
+using System.Collections;
+using Unity.VisualScripting;
 
 public enum GameState
 {
@@ -35,9 +37,9 @@ public class TurnManager : MonoBehaviour
         nextRoundButton.SetActive(false);
         deckManager = FindObjectOfType<DeckManager>();
         players = deckManager.players;
-        //deckManager.StartNewHand();
+        deckManager.StartNewHand();
         //AssignPlayersToSeats();
-        //StartBettingRound();
+        StartBettingRound();
     }
 
     public void InitializeGame()
@@ -88,14 +90,20 @@ public class TurnManager : MonoBehaviour
             StartPlayerTurn();
         }
     }
-
     private void StartPlayerTurn()
+    {
+        StartCoroutine(StartPlayerTurnEnum());
+    }
+
+    private IEnumerator StartPlayerTurnEnum()
     {
         gameInfoText.text = "";
         if (players[currentPlayerIndex].isPlayerActive)
         {
             gameInfoText.text = $"{players[currentPlayerIndex].playerName}'s turn";
             Debug.Log($"Turno del jugador: {players[currentPlayerIndex].playerName}\nApuesta actual del jugador: {players[currentPlayerIndex].currentBet}");
+            players[currentPlayerIndex].betWindow.SetActive(false);
+
             int callAmount = currentBet - players[currentPlayerIndex].currentBet;
             if (callAmount == 0)
             {
@@ -114,6 +122,11 @@ public class TurnManager : MonoBehaviour
             {
                 Color alphaColor = new Color(0, 0, 0, 0);
                 player.playerTurnImage.color = alphaColor;
+            }
+
+            if (!players[currentPlayerIndex].isHuman)
+            {
+                yield return StartCoroutine(IAPause(3f));
             }
             players[currentPlayerIndex].StartTurn(currentBet, pot);
         }
@@ -245,6 +258,7 @@ public class TurnManager : MonoBehaviour
 
     private void DetermineWinner()
     {
+        players[currentPlayerIndex].betWindow.SetActive(false);
         Debug.Log("Evaluando manos y determinando el ganador.");
         var (winner, bestHand) = deckManager.EvaluateHands();
         gameInfoText.text = $"{winner.playerName} wins the hand \nwith {bestHand}\nand takes a pot of {FormatCurrency(pot)}";
@@ -263,8 +277,12 @@ public class TurnManager : MonoBehaviour
     {
         return string.Format("${0:N0}", value);
     }
-
     public void PlayerCall()
+    {
+        StartCoroutine(PlayerCallEnum());
+    }
+
+    public IEnumerator PlayerCallEnum()
     {
         PlayerController currentPlayer = players[currentPlayerIndex];
 
@@ -275,6 +293,9 @@ public class TurnManager : MonoBehaviour
 
         //GameObject.FindWithTag("BetWindow").SetActive(false);
         currentPlayer.GetComponent<PlayerController>().hasActed = true;
+        gameInfoText.text = $"{currentPlayer.playerName} calls.";
+
+        if (!currentPlayer.isHuman) { yield return StartCoroutine(IAPause(3f)); }
         AdvanceToNextPlayer();
     }
 
@@ -298,29 +319,79 @@ public class TurnManager : MonoBehaviour
         else { raiseText.text = "$20"; }
         
     }
-
     public void PlayerRaise()
+    {
+        StartCoroutine(PlayerRaiseEnum());
+    }
+
+    public IEnumerator PlayerRaiseEnum()
     {
         PlayerController currentPlayer = players[currentPlayerIndex];
         string textToParse = raiseText.text.Remove(0, 1);
         int amount = int.Parse(textToParse);
         int callAmount = currentBet - currentPlayer.currentBet;
-        int raiseAmount = amount + callAmount;
-        currentPlayer.Bet(raiseAmount);
+        int totalBet = amount + callAmount;
+        if (totalBet > currentPlayer.credit)
+        {
+            Debug.LogWarning($"{currentPlayer.playerName} no tiene suficiente crédito para esta apuesta.");
+            totalBet = currentPlayer.credit; // All-in si no tiene suficiente crédito
+        }
+        currentPlayer.Bet(totalBet);
         currentBet += amount;
-        pot += raiseAmount;
+        pot += totalBet;
         deckManager.UpdateUIPot(pot);
-
-        //GameObject.FindWithTag("BetWindow").SetActive(false);
-        currentPlayer.GetComponent<PlayerController>().hasActed = true;
+        gameInfoText.text = $"{currentPlayer.playerName} raises {FormatCurrency(amount)}\nand bets a total of {FormatCurrency(totalBet)}.";
+        currentPlayer.hasActed = true;
+        if (!currentPlayer.isHuman) { yield return StartCoroutine(IAPause(3f)); }
         AdvanceToNextPlayer();
-    } 
+
+    }
+
+    public void PlayerRaise2(int raiseAmount)
+    {
+        StartCoroutine(PlayerRaiseEnum2(raiseAmount));
+    }
+    public IEnumerator PlayerRaiseEnum2(int raiseAmount)
+    {
+        PlayerController currentPlayer = players[currentPlayerIndex];
+        int callAmount = currentBet - currentPlayer.currentBet;
+        int totalBet = raiseAmount + callAmount;
+        if (totalBet > currentPlayer.credit)
+        {
+            Debug.LogWarning($"{currentPlayer.playerName} no tiene suficiente crédito para esta apuesta.");
+            totalBet = currentPlayer.credit; // All-in si no tiene suficiente crédito
+        }
+        currentPlayer.Bet(totalBet);
+        currentBet += (totalBet - callAmount);
+        pot += totalBet;
+        deckManager.UpdateUIPot(pot);
+        gameInfoText.text = $"{currentPlayer.playerName} raises {FormatCurrency(raiseAmount)}\nand bets a total of {FormatCurrency(totalBet)}.";
+        currentPlayer.hasActed = true;
+        if (!currentPlayer.isHuman) { yield return StartCoroutine(IAPause(3f)); }
+        AdvanceToNextPlayer();
+    }
+
+    public void IARaise(int callAmount)
+    {
+        PlayerController currentPlayer = players[currentPlayerIndex];
+        int raiseAmount = callAmount + Random.Range(callAmount / 2, callAmount * 2);
+        raiseAmount = Mathf.Min(raiseAmount, currentPlayer.credit);
+        PlayerRaise2(raiseAmount);
+    }
+
     public void PlayerFold()
+    {
+        StartCoroutine(PlayerFoldEnum());
+    }
+    public IEnumerator PlayerFoldEnum()
     {
         PlayerController currentPlayer = players[currentPlayerIndex];
         currentPlayer.GetComponent<PlayerController>().Fold();
         currentPlayer.GetComponent<PlayerController>().hasActed = true;
+        gameInfoText.text = $"{currentPlayer.playerName} folds.";
+        if (!currentPlayer.isHuman) { yield return StartCoroutine(IAPause(3f)); }
         AdvanceToNextPlayer();
+
     }
 
     public void ToNextRound()
@@ -329,5 +400,16 @@ public class TurnManager : MonoBehaviour
         deckManager.ResetDeck();
         StartBettingRound();
         nextRoundButton.SetActive(false);
+    }
+
+    IEnumerator IAWaitTime(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        AdvanceToNextPlayer();
+    }
+
+    IEnumerator IAPause(float pauseTime)
+    {
+        yield return new WaitForSeconds(pauseTime);
     }
 }

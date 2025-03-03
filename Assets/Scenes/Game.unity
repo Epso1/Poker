@@ -1167,6 +1167,7 @@ MonoBehaviour:
   dealerUIIcon: {fileID: 0}
   smallBlindUIIcon: {fileID: 0}
   bigBlindUIIcon: {fileID: 0}
+  betWindow: {fileID: 1976191161}
   dealerTableUIIcon: {fileID: 420035470}
   smallBlindTableUIIcon: {fileID: 1414863278}
   bigBlindTableUIIcon: {fileID: 600990427}
@@ -2791,7 +2792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26566eefdea45ef40bcffa258f20293c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Player1
+  playerName: Human1
   playerID: 
   credit: 2000
   card1Position: {fileID: 5332896744484165368}
@@ -2808,6 +2809,7 @@ MonoBehaviour:
   dealerUIIcon: {fileID: 2129892733}
   smallBlindUIIcon: {fileID: 332862470}
   bigBlindUIIcon: {fileID: 617295911}
+  betWindow: {fileID: 1976191161}
   dealerTableUIIcon: {fileID: 688307391}
   smallBlindTableUIIcon: {fileID: 662667534}
   bigBlindTableUIIcon: {fileID: 1344845567}
@@ -3101,6 +3103,7 @@ MonoBehaviour:
   dealerUIIcon: {fileID: 0}
   smallBlindUIIcon: {fileID: 0}
   bigBlindUIIcon: {fileID: 0}
+  betWindow: {fileID: 1976191161}
   dealerTableUIIcon: {fileID: 1791865643}
   smallBlindTableUIIcon: {fileID: 1363827192}
   bigBlindTableUIIcon: {fileID: 1525431835}
@@ -4172,6 +4175,7 @@ MonoBehaviour:
   dealerUIIcon: {fileID: 0}
   smallBlindUIIcon: {fileID: 0}
   bigBlindUIIcon: {fileID: 0}
+  betWindow: {fileID: 1976191161}
   dealerTableUIIcon: {fileID: 369995752}
   smallBlindTableUIIcon: {fileID: 1822379012}
   bigBlindTableUIIcon: {fileID: 1950230788}
@@ -11650,7 +11654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1976191162
 RectTransform:
   m_ObjectHideFlags: 0
